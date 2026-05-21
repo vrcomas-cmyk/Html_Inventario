@@ -4,37 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Inventario DEGASA · Dashboard</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/css/tabulator.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: #f4f6fa;
             padding: 32px 24px;
             color: #1e293b;
         }
+        .dashboard-container { max-width: 1600px; margin: 0 auto; }
 
-        .dashboard-container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* Header */
+        /* ============ Header ============ */
         .page-header {
             margin-bottom: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
             gap: 16px;
             background: white;
             padding: 24px;
@@ -42,39 +31,26 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         .title-section h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.8rem; font-weight: 800;
             background: linear-gradient(135deg, #0f172a, #2563eb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: inline-flex; align-items: center; gap: 12px;
         }
-        .title-section h1 i {
-            color: #2563eb;
-            -webkit-text-fill-color: initial;
-        }
+        .title-section h1 i { color: #2563eb; -webkit-text-fill-color: initial; }
         .badge-update {
             background: #f0fdf4;
             padding: 10px 20px;
             border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.85rem; font-weight: 600;
             color: #166534;
             border: 1px solid #bbf7d0;
             cursor: pointer;
             transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px;
         }
-        .badge-update:hover {
-            background: #dcfce7;
-            transform: scale(1.02);
-        }
+        .badge-update:hover { background: #dcfce7; transform: scale(1.02); }
 
-        /* KPIs Grid */
+        /* ============ KPIs ============ */
         .kpis-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -82,82 +58,135 @@
             margin-bottom: 28px;
         }
         .kpi-card {
-            background: white;
-            border-radius: 20px;
+            background: white; border-radius: 20px;
             padding: 20px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .kpi-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .kpi-info h3 {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #64748b;
-            margin-bottom: 6px;
+            font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: #64748b; margin-bottom: 6px;
         }
-        .kpi-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #0f172a;
-        }
-        .kpi-icon {
-            font-size: 2.2rem;
-            color: #3b82f6;
-            opacity: 0.8;
-        }
+        .kpi-number { font-size: 2rem; font-weight: 800; color: #0f172a; }
+        .kpi-icon { font-size: 2.2rem; color: #3b82f6; opacity: 0.8; }
 
-        /* Sistema de Navegación por Pestañas (Tabs) */
+        /* ============ Tabs ============ */
         .tabs-navigation {
-            display: flex;
-            gap: 12px;
+            display: flex; gap: 12px;
             margin-bottom: 20px;
             background: #e2e8f0;
-            padding: 6px;
-            border-radius: 14px;
+            padding: 6px; border-radius: 14px;
             width: fit-content;
         }
         .tab-btn {
-            background: transparent;
-            border: none;
+            background: transparent; border: none;
             padding: 10px 24px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #475569;
-            border-radius: 10px;
-            cursor: pointer;
+            font-size: 0.95rem; font-weight: 600; color: #475569;
+            border-radius: 10px; cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .tab-btn.active { background: white; color: #2563eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08); }
+        .tab-btn:hover:not(.active) { background: rgba(255, 255, 255, 0.5); color: #1e293b; }
+        .tab-panel { display: block; }
+        .tab-panel.hidden { display: none; }
+
+        /* ============ Top Inventarios Card ============ */
+        .top-inv-card {
+            background: white;
+            border-radius: 20px;
+            padding: 22px 26px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .top-inv-card h3 {
+            font-size: 1.1rem; font-weight: 700;
+            margin-bottom: 16px; color: #0f172a;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .top-inv-card h3 i { color: #f59e0b; }
+        .top-inv-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .top-inv-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 12px 14px;
+            background: #fafbfc;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s;
+        }
+        .top-inv-item:hover { background: #f0f9ff; border-color: #bfdbfe; transform: translateX(2px); }
+        .top-inv-rank {
+            min-width: 32px; height: 32px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white; font-weight: 800;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+        .top-inv-rank.gold { background: linear-gradient(135deg, #fcd34d, #d97706); }
+        .top-inv-rank.silver { background: linear-gradient(135deg, #cbd5e1, #64748b); }
+        .top-inv-rank.bronze { background: linear-gradient(135deg, #fdba74, #c2410c); }
+        .top-inv-info { flex: 1; min-width: 0; }
+        .top-inv-mat { font-weight: 700; color: #0f172a; font-size: 0.9rem; }
+        .top-inv-desc {
+            font-size: 0.78rem; color: #64748b;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            margin-top: 2px;
+        }
+        .top-inv-qty {
+            font-weight: 800; color: #2563eb; font-size: 1.05rem;
+            text-align: right;
+        }
+        .top-inv-qty small { display: block; font-size: 0.65rem; color: #94a3b8; font-weight: 500; }
+
+        /* ============ Inventory Selector ============ */
+        .inv-selector {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fafbfc;
+            display: flex; flex-wrap: wrap; align-items: center;
             gap: 8px;
         }
-        .tab-btn.active {
+        .inv-selector-label {
+            font-size: 0.85rem; font-weight: 600;
+            color: #475569; margin-right: 4px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .inv-chip {
             background: white;
-            color: #2563eb;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+            border: 1px solid #cbd5e1;
+            padding: 7px 14px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 0.85rem; font-weight: 600;
+            color: #475569;
+            transition: all 0.15s;
+            font-family: inherit;
         }
-        .tab-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.5);
-            color: #1e293b;
+        .inv-chip:hover:not(.active) { background: #f1f5f9; border-color: #94a3b8; }
+        .inv-chip.active {
+            background: #2563eb; border-color: #2563eb; color: white;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
         }
+        .inv-chip-clear {
+            background: transparent;
+            border: 1px dashed #cbd5e1;
+            color: #94a3b8;
+            margin-left: auto;
+        }
+        .inv-chip-clear:hover { color: #ef4444; border-color: #fca5a5; background: #fef2f2; }
 
-        /* Contenedores de Pestañas */
-        .tab-panel {
-            display: block;
-        }
-        .tab-panel.hidden {
-            display: none;
-        }
-
-        /* Contenedor de Tablas tipo Card */
+        /* ============ Table Card ============ */
         .table-card {
             background: white;
             border-radius: 20px;
@@ -168,40 +197,29 @@
         .table-header {
             padding: 20px 24px;
             border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
             gap: 16px;
         }
         .table-header h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1.25rem; font-weight: 700; color: #0f172a;
+            display: flex; align-items: center; gap: 8px;
         }
         .search-wrapper {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             background: #f8fafc;
             border-radius: 9999px;
             padding: 0 16px;
             border: 1px solid #cbd5e1;
             transition: all 0.2s;
         }
-        .search-wrapper i {
-            color: #94a3b8;
-        }
+        .search-wrapper i { color: #94a3b8; }
         .search-wrapper input {
-            border: none;
-            background: transparent;
+            border: none; background: transparent;
             padding: 10px 4px 10px 10px;
             font-size: 0.9rem;
             width: 280px;
-            outline: none;
-            font-weight: 500;
+            outline: none; font-weight: 500;
             color: #334155;
         }
         .search-wrapper:focus-within {
@@ -210,19 +228,14 @@
             background: white;
         }
 
-        /* Loaders y Errores */
+        /* ============ Loaders & Errors ============ */
         .loader-overlay {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px;
-            background: white;
-            font-weight: 500;
-            color: #64748b;
+            display: flex; justify-content: center; align-items: center;
+            padding: 60px; background: white;
+            font-weight: 500; color: #64748b;
         }
         .loader-spinner {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border: 3px solid #e2e8f0;
             border-top: 3px solid #2563eb;
             border-radius: 50%;
@@ -230,39 +243,33 @@
             margin-right: 12px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
         .error-message {
-            background: #fef2f2;
-            color: #991b1b;
+            background: #fef2f2; color: #991b1b;
             border-left: 4px solid #ef4444;
             padding: 16px 24px;
             border-radius: 12px;
             font-weight: 500;
             margin: 24px;
         }
-
         .dashboard-footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            color: #94a3b8;
+            text-align: center; margin-top: 40px;
+            padding-top: 20px; color: #94a3b8;
             font-size: 0.8rem;
             border-top: 1px solid #e2e8f0;
         }
 
+        /* ============ Responsive ============ */
         @media (max-width: 768px) {
             body { padding: 16px; }
             .table-header { flex-direction: column; align-items: stretch; }
             .search-wrapper input { width: 100%; }
             .tabs-navigation { width: 100%; }
             .tab-btn { flex: 1; justify-content: center; }
+            .inv-chip-clear { margin-left: 0; }
         }
 
-        /* Customización limpia para la UI de Tabulator */
-        .tabulator {
-            border: none !important;
-            background-color: transparent !important;
-        }
+        /* ============ Tabulator UI ============ */
+        .tabulator { border: none !important; background-color: transparent !important; }
         .tabulator .tabulator-header {
             background-color: #f8fafc !important;
             border-bottom: 2px solid #e2e8f0 !important;
@@ -272,20 +279,23 @@
             background-color: #f8fafc !important;
             border-right: 1px solid #e2e8f0 !important;
         }
-        .tabulator-row {
-            border-bottom: 1px solid #f1f5f9 !important;
+        .tabulator-row { border-bottom: 1px solid #f1f5f9 !important; }
+        .tabulator-row.tabulator-row-even { background-color: #f8fafc !important; }
+        .tabulator-row:hover { background-color: #f0fdf4 !important; cursor: pointer; }
+
+        /* Resaltado para filas con mayor Precio */
+        .tabulator-row.row-top-price {
+            background-color: #fef3c7 !important;
+            border-left: 4px solid #f59e0b !important;
         }
-        .tabulator-row.tabulator-row-even {
-            background-color: #f8fafc !important;
-        }
-        .tabulator-row:hover {
-            background-color: #f0fdf4 !important;
+        .tabulator-row.row-top-price:hover {
+            background-color: #fde68a !important;
         }
     </style>
 </head>
 <body>
 <div class="dashboard-container">
-    
+
     <div class="page-header">
         <div class="title-section">
             <h1><i class="fas fa-boxes-stacked"></i> Portal Inventario DEGASA</h1>
@@ -353,6 +363,15 @@
     </div>
 
     <div id="panel-resumen" class="tab-panel hidden">
+
+        <!-- Top Inventarios -->
+        <div class="top-inv-card">
+            <h3><i class="fas fa-trophy"></i> Top 5 Inventarios (por Inv Suma)</h3>
+            <div class="top-inv-list" id="topInvList">
+                <div style="color:#94a3b8; padding: 12px;">Calculando ranking…</div>
+            </div>
+        </div>
+
         <div class="table-card">
             <div class="table-header">
                 <h2><i class="fas fa-calculator" style="color: #2563eb;"></i> Consolidado y Precios</h2>
@@ -361,6 +380,22 @@
                     <input type="text" id="buscar2" placeholder="Buscar por Material o Condición...">
                 </div>
             </div>
+
+            <!-- Selector de columnas de inventario -->
+            <div class="inv-selector">
+                <span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>
+                <button class="inv-chip" data-inv="1001">1001</button>
+                <button class="inv-chip" data-inv="1003">1003</button>
+                <button class="inv-chip" data-inv="1004">1004</button>
+                <button class="inv-chip" data-inv="1017">1017</button>
+                <button class="inv-chip" data-inv="1018">1018</button>
+                <button class="inv-chip" data-inv="1022">1022</button>
+                <button class="inv-chip" data-inv="1036">1036</button>
+                <button class="inv-chip inv-chip-clear" id="invChipClear">
+                    <i class="fas fa-eraser"></i> Limpiar
+                </button>
+            </div>
+
             <div id="tabla2">
                 <div class="loader-overlay"><div class="loader-spinner"></div>Construyendo matriz de resumen...</div>
             </div>
@@ -375,189 +410,264 @@
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/js/tabulator.min.js"></script>
 <script>
     (function() {
+        const INV_CODES = ['1001', '1003', '1004', '1017', '1018', '1022', '1036'];
+        const TOP_PRECIO_N = 5;       // Cuántas filas resaltar por mayor precio
+        const TOP_INV_N = 5;          // Cuántos items en el ranking
+
         function waitForTabulator(callback) {
-            if (typeof Tabulator !== 'undefined') {
-                callback();
-            } else {
-                setTimeout(function() { waitForTabulator(callback); }, 50);
-            }
+            if (typeof Tabulator !== 'undefined') callback();
+            else setTimeout(() => waitForTabulator(callback), 50);
+        }
+
+        // Parseo numérico tolerante (acepta coma decimal y símbolos)
+        function toNum(val) {
+            if (val === undefined || val === null || val === '') return NaN;
+            if (typeof val === 'number') return val;
+            const cleaned = String(val).replace(',', '.').replace(/[^0-9.-]/g, '');
+            const n = parseFloat(cleaned);
+            return isNaN(n) ? NaN : n;
+        }
+
+        function escapeHtml(str) {
+            if (str === undefined || str === null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
         function initApp() {
             const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
-            
-            // Solución Bug 1: Codificación explícita de caracteres especiales y espacios para OpenSheet
-            const hoja1 = encodeURIComponent("InvDetalle");
-            const hoja2 = encodeURIComponent("InvConsolidado");
-            
-            const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
-            const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
+            const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent("InvDetalle")}`;
+            const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent("InvConsolidado")}`;
 
             let t1 = null, t2 = null;
-            
-            const totalRegistrosSpan = document.getElementById("totalRegistros");
-            const materialesUnicosSpan = document.getElementById("materialesUnicos");
-            const totalUnidadesSpan = document.getElementById("totalUnidades");
-            const lastUpdateSpan = document.getElementById("lastUpdateTime");
+            let topPrecioThreshold = Infinity;
+
+            const $ = (id) => document.getElementById(id);
+            const totalRegistros   = $("totalRegistros");
+            const materialesUnicos = $("materialesUnicos");
+            const totalUnidades    = $("totalUnidades");
+            const lastUpdate       = $("lastUpdateTime");
 
             function updateTimestamp() {
                 const now = new Date();
-                lastUpdateSpan.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')} hrs`;
+                lastUpdate.innerText =
+                    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} hrs`;
             }
 
             function calcularTotalUnidades(data) {
                 let total = 0;
-                for(let row of data) {
-                    let val = row.CantidadDisp || row["CantidadDisp"] || 0;
-                    if(typeof val === 'string') val = val.replace(',', '.').replace(/[^0-9.-]/g, '');
-                    const num = parseFloat(val);
-                    if(!isNaN(num)) total += num;
+                for (const row of data) {
+                    const n = toNum(row.CantidadDisp);
+                    if (!isNaN(n)) total += n;
                 }
                 return total.toLocaleString('es-ES', { maximumFractionDigits: 0 });
             }
 
-            function formatNumber(value) {
-                if(value === undefined || value === null || value === '') return '0';
-                let num = typeof value === 'string' ? parseFloat(value.replace(',', '.')) : value;
-                if(isNaN(num)) return value;
-                return num.toLocaleString('es-ES');
+            // ============ Top Inventarios (recuadro) ============
+            function renderTopInventarios(data) {
+                const ranked = data
+                    .map(r => ({ row: r, suma: toNum(r["Inv Suma"]) }))
+                    .filter(x => !isNaN(x.suma) && x.suma > 0)
+                    .sort((a, b) => b.suma - a.suma)
+                    .slice(0, TOP_INV_N);
+
+                const container = $("topInvList");
+                if (ranked.length === 0) {
+                    container.innerHTML = '<div style="color:#94a3b8; padding:12px;">Sin datos suficientes para el ranking</div>';
+                    return;
+                }
+
+                container.innerHTML = ranked.map((item, i) => {
+                    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+                    return `
+                        <div class="top-inv-item">
+                            <div class="top-inv-rank ${rankClass}">${i + 1}</div>
+                            <div class="top-inv-info">
+                                <div class="top-inv-mat">${escapeHtml(item.row.Material)}</div>
+                                <div class="top-inv-desc">${escapeHtml(item.row["Texto breve de material"])}</div>
+                            </div>
+                            <div class="top-inv-qty">
+                                ${item.suma.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
+                                <small>Inv Suma</small>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             }
 
-            // ----- Inicialización Pestaña 1 (Lotes) -----
+            // ============ Threshold de Precio ============
+            function calcularPrecioThreshold(data) {
+                const precios = data
+                    .map(r => toNum(r.Precio))
+                    .filter(p => !isNaN(p) && p > 0)
+                    .sort((a, b) => b - a);
+
+                if (precios.length === 0) return Infinity;
+                const idx = Math.min(TOP_PRECIO_N - 1, precios.length - 1);
+                return precios[idx];
+            }
+
+            // ============ TABLA 1: InvDetalle ============
             fetch(url1)
-                .then(res => { if(!res.ok) throw new Error(`HTTP Error ${res.status}`); return res.json(); })
+                .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
                 .then(data => {
-                    totalRegistrosSpan.innerText = data.length.toLocaleString();
-                    const materialesSet = new Set(data.map(x => x.Material).filter(m => m && m.trim() !== ""));
-                    materialesUnicosSpan.innerText = materialesSet.size.toLocaleString();
-                    totalUnidadesSpan.innerText = calcularTotalUnidades(data);
+                    totalRegistros.innerText = data.length.toLocaleString();
+                    const matsUnicos = new Set(data.map(x => x.Material).filter(m => m && String(m).trim() !== ""));
+                    materialesUnicos.innerText = matsUnicos.size.toLocaleString();
+                    totalUnidades.innerText = calcularTotalUnidades(data);
                     updateTimestamp();
 
                     t1 = new Tabulator("#tabla1", {
-                        data: data,
-                        layout: "fitColumns",
+                        data,
+                        layout: "fitDataStretch",
                         pagination: "local",
                         paginationSize: 15,
                         paginationSizeSelector: [15, 30, 50, 100],
-                        responsiveLayout: "hide",
                         placeholder: "No se encontraron registros de lotes disponibles",
                         columns: [
-                            { title: "Material", field: "Material", width: 140, headerSort: true },
-                            { title: "Texto breve de material", field: "Texto breve de material", minWidth: 250 },
-                            { title: "Centro", field: "Centro", width: 100, hozAlign: "center" },
-                            { title: "Almacén", field: "Almacén", width: 100, hozAlign: "center" },
-                            { title: "Lote", field: "Lote", width: 140 },
-                            { title: "Fecha Caducidad", field: "FechaCaducidad", width: 150, hozAlign: "center" },
-                            { title: "Cant. Disp", field: "CantidadDisp", width: 130, formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" }
+                            { title: "Material",                field: "Material",                minWidth: 110 },
+                            { title: "Texto breve de material", field: "Texto breve de material", minWidth: 240 },
+                            { title: "Centro",                  field: "Centro",                  minWidth: 90  },
+                            { title: "Almacén",                 field: "Almacén",                 minWidth: 100 },
+                            { title: "Lote",                    field: "Lote",                    minWidth: 130 },
+                            { title: "FechaCaducidad",          field: "FechaCaducidad",          minWidth: 130 },
+                            { title: "CantidadDisp",            field: "CantidadDisp",            minWidth: 110, hozAlign: "right" },
+                            { title: "Precio oferta",           field: "Precio oferta",           minWidth: 110, hozAlign: "right" }
                         ],
                     });
 
-                    // Solución Bug 2: Arreglo bidimensional para Filtro OR correcto en Tabulator v5
-                    const inputBuscar1 = document.getElementById("buscar1");
-                    if(inputBuscar1) {
+                    const inputBuscar1 = $("buscar1");
+                    if (inputBuscar1) {
                         inputBuscar1.addEventListener("keyup", () => {
                             const val = inputBuscar1.value.trim();
-                            if(!t1) return;
-                            if(val === "") {
-                                t1.clearFilter();
-                            } else {
-                                t1.setFilter([
-                                    { field: "Material", type: "like", value: val },
-                                    { field: "Texto breve de material", type: "like", value: val },
-                                    { field: "Lote", type: "like", value: val }
-                                ]);
-                            }
+                            if (!t1) return;
+                            if (val === "") t1.clearFilter();
+                            else t1.setFilter([
+                                { field: "Material",                type: "like", value: val },
+                                { field: "Texto breve de material", type: "like", value: val },
+                                { field: "Lote",                    type: "like", value: val }
+                            ]);
                         });
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    document.getElementById("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con Inv Consolidado: ${err.message}</div>`;
+                    $("tabla1").innerHTML =
+                        `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvDetalle: ${err.message}</div>`;
                 });
 
-            // ----- Inicialización Pestaña 2 (Resumen) -----
+            // ============ TABLA 2: InvConsolidado ============
             fetch(url2)
-                .then(res => { if(!res.ok) throw new Error(`HTTP Error ${res.status}`); return res.json(); })
+                .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
                 .then(data => {
+                    renderTopInventarios(data);
+                    topPrecioThreshold = calcularPrecioThreshold(data);
+
+                    // Columnas: fijas + dinámicas (estas últimas ocultas por defecto)
+                    const colsFijasInicio = [
+                        { title: "Condicion",                field: "Condicion",                minWidth: 110 },
+                        { title: "Material",                 field: "Material",                 minWidth: 110 },
+                        { title: "Texto breve de material",  field: "Texto breve de material",  minWidth: 240 },
+                        { title: "Disponible 1031-1030",     field: "Disponible 1031-1030",     minWidth: 130, hozAlign: "right" },
+                        { title: "Disponible 1031-1032",     field: "Disponible 1031-1032",     minWidth: 130, hozAlign: "right" }
+                    ];
+                    const colsInventarios = INV_CODES.flatMap(code => ([
+                        { title: `Inv ${code}`,                   field: `Inv ${code}`,                   minWidth: 90,  hozAlign: "right", visible: false },
+                        { title: `Cant. en Tránsito Inv ${code}`, field: `Cant. en Tránsito Inv ${code}`, minWidth: 160, hozAlign: "right", visible: false }
+                    ]));
+                    const colsFijasFin = [
+                        { title: "Inv Suma", field: "Inv Suma", minWidth: 100, hozAlign: "right" },
+                        { title: "Precio",   field: "Precio",   minWidth: 100, hozAlign: "right" }
+                    ];
+
                     t2 = new Tabulator("#tabla2", {
-                        data: data,
-                        layout: "fitColumns",
+                        data,
+                        layout: "fitDataStretch",
                         pagination: "local",
                         paginationSize: 15,
                         paginationSizeSelector: [15, 30, 50, 100],
                         placeholder: "No hay registros consolidados",
-                        columns: [
-                            { title: "Condición", field: "Condicion", width: 130 },
-                            { title: "Material", field: "Material", width: 130 },
-                            { title: "Texto Informativo", field: "Texto breve de material", minWidth: 220 },
-                            { title: "Disp 1031-1030", field: "Disponible 1031-1030", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { title: "Inv 1017", field: "Inv 1017", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { title: "Inv 1018", field: "Inv 1018", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { 
-                                title: "Inv Suma", 
-                                field: "Inv Suma", 
-                                formatter: (c) => `<b>${formatNumber(c.getValue())}</b>`, 
-                                hozAlign: "right" 
-                            },
-                            { title: "Precio (€)", field: "Precio", width: 120, formatter: (c) => {
-                                let val = c.getValue();
-                                if(!val) return "";
-                                let num = parseFloat(String(val).replace(',', '.'));
-                                if(isNaN(num)) return val;
-                                return num.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-                            }, hozAlign: "right" }
-                        ],
+                        columns: [...colsFijasInicio, ...colsInventarios, ...colsFijasFin],
+                        rowFormatter: function(row) {
+                            const d = row.getData();
+                            const precio = toNum(d.Precio);
+                            const el = row.getElement();
+                            if (!isNaN(precio) && precio > 0 && precio >= topPrecioThreshold) {
+                                el.classList.add('row-top-price');
+                            } else {
+                                el.classList.remove('row-top-price');
+                            }
+                        }
                     });
 
-                    // Filtro OR para la tabla 2
-                    const inputBuscar2 = document.getElementById("buscar2");
-                    if(inputBuscar2) {
+                    const inputBuscar2 = $("buscar2");
+                    if (inputBuscar2) {
                         inputBuscar2.addEventListener("keyup", () => {
                             const val = inputBuscar2.value.trim();
-                            if(!t2) return;
-                            if(val === "") {
-                                t2.clearFilter();
-                            } else {
-                                t2.setFilter([
-                                    { field: "Material", type: "like", value: val },
-                                    { field: "Texto breve de material", type: "like", value: val },
-                                    { field: "Lote", type: "like", value: val }
-                                ]);
-                            }
+                            if (!t2) return;
+                            if (val === "") t2.clearFilter();
+                            else t2.setFilter([
+                                { field: "Material",                type: "like", value: val },
+                                { field: "Texto breve de material", type: "like", value: val },
+                                { field: "Condicion",               type: "like", value: val }
+                            ]);
                         });
                     }
+
+                    // Chips: cada uno alterna 2 columnas (Inv X y Cant. en Tránsito X)
+                    document.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
+                        chip.addEventListener('click', () => {
+                            const code = chip.getAttribute('data-inv');
+                            const isActive = chip.classList.toggle('active');
+                            const colInv = t2.getColumn(`Inv ${code}`);
+                            const colTra = t2.getColumn(`Cant. en Tránsito Inv ${code}`);
+                            if (isActive) {
+                                if (colInv) colInv.show();
+                                if (colTra) colTra.show();
+                            } else {
+                                if (colInv) colInv.hide();
+                                if (colTra) colTra.hide();
+                            }
+                        });
+                    });
+
+                    // Botón Limpiar: oculta todo y desactiva todos los chips
+                    $("invChipClear").addEventListener('click', () => {
+                        document.querySelectorAll('.inv-chip[data-inv]').forEach(c => {
+                            c.classList.remove('active');
+                            const code = c.getAttribute('data-inv');
+                            const colInv = t2.getColumn(`Inv ${code}`);
+                            const colTra = t2.getColumn(`Cant. en Tránsito Inv ${code}`);
+                            if (colInv) colInv.hide();
+                            if (colTra) colTra.hide();
+                        });
+                    });
                 })
                 .catch(err => {
                     console.error(err);
-                    document.getElementById("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con Inv Detalle: ${err.message}</div>`;
+                    $("tabla2").innerHTML =
+                        `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvConsolidado: ${err.message}</div>`;
                 });
 
-            // ----- Lógica del Conmutador de Pestañas (Tabs) -----
-            const botonesPestaña = document.querySelectorAll('.tab-btn');
-            const panelesPestaña = document.querySelectorAll('.tab-panel');
-
-            botonesPestaña.forEach(btn => {
+            // ============ Tabs ============
+            const botones = document.querySelectorAll('.tab-btn');
+            const paneles = document.querySelectorAll('.tab-panel');
+            botones.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Remover estado activo de botones y ocultar todos los paneles
-                    botonesPestaña.forEach(b => b.classList.remove('active'));
-                    panelesPestaña.forEach(p => p.classList.add('hidden'));
-
-                    // Activar panel seleccionado
+                    botones.forEach(b => b.classList.remove('active'));
+                    paneles.forEach(p => p.classList.add('hidden'));
                     btn.classList.add('active');
                     const panelId = btn.getAttribute('data-panel');
-                    document.getElementById(panelId).classList.remove('hidden');
-
-                    // Solución Bug 3: Re-dibujar tablas de Tabulator al volverse visibles
-                    if (panelId === 'panel-lotes' && t1) t1.redraw(true);
+                    $(panelId).classList.remove('hidden');
+                    if (panelId === 'panel-lotes'   && t1) t1.redraw(true);
                     if (panelId === 'panel-resumen' && t2) t2.redraw(true);
                 });
             });
 
-            // Recarga automática de la App cada 5 minutos
-            setInterval(() => { window.location.reload(); }, 300000);
-            
-            // Evento manual sobre el Badge de estado
-            document.getElementById("lastUpdateBadge").onclick = () => window.location.reload();
+            // Auto-refresh cada 5 min y manual al click en badge
+            setInterval(() => window.location.reload(), 300000);
+            $("lastUpdateBadge").onclick = () => window.location.reload();
         }
 
         waitForTabulator(initApp);
