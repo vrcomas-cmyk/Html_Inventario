@@ -25,13 +25,12 @@
             color: #1a2634;
         }
 
-        /* Contenedor general */
         .dashboard-container {
             max-width: 1600px;
             margin: 0 auto;
         }
 
-        /* Header con gradiente sutil */
+        /* Header */
         .page-header {
             margin-bottom: 32px;
             display: flex;
@@ -68,13 +67,19 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             color: #2c3e58;
             border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .badge-update:hover {
+            background: #f0f7ff;
+            border-color: #0070f3;
         }
         .badge-update i {
             margin-right: 8px;
             color: #2e7d32;
         }
 
-        /* Grid de KPIs */
+        /* KPIs Grid */
         .kpis-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -88,7 +93,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.03);
             transition: all 0.2s ease;
             border: 1px solid #edf2f7;
-            backdrop-filter: blur(2px);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -118,14 +122,13 @@
             color: #0070f3;
         }
 
-        /* Contenedores de tablas (cards) */
+        /* Tablas tipo card */
         .table-card {
             background: white;
             border-radius: 28px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
             margin-bottom: 40px;
             overflow: hidden;
-            transition: all 0.2s;
             border: 1px solid #eef3fc;
         }
         .table-header {
@@ -148,7 +151,6 @@
         }
         .table-header h2 i {
             color: #0070f3;
-            font-size: 1.5rem;
         }
         .search-wrapper {
             display: flex;
@@ -161,7 +163,6 @@
         }
         .search-wrapper i {
             color: #8ca0b7;
-            font-size: 0.9rem;
         }
         .search-wrapper input {
             border: none;
@@ -173,51 +174,11 @@
             outline: none;
             font-weight: 500;
         }
-        .search-wrapper input:focus {
-            color: #0a2b3e;
-        }
         .search-wrapper:focus-within {
             border-color: #0070f3;
             box-shadow: 0 0 0 3px rgba(0,112,243,0.1);
             background: white;
         }
-        .table-container {
-            padding: 0 1px 1px 1px;
-        }
-
-        /* Mejoras visuales para tabulator */
-        .tabulator {
-            font-family: 'Inter', sans-serif;
-            border: none !important;
-            border-radius: 0 0 24px 24px !important;
-            overflow: hidden;
-        }
-        .tabulator .tabulator-header {
-            background: #f9fbfe;
-            border-bottom: 1px solid #e9eff5;
-            font-weight: 600;
-        }
-        .tabulator .tabulator-header .tabulator-col {
-            background: #f9fbfe;
-            border-right: none;
-            font-weight: 600;
-            color: #1e3a5f;
-        }
-        .tabulator .tabulator-tableholder .tabulator-table {
-            color: #1e2f3c;
-        }
-        .tabulator-row {
-            border-bottom: 1px solid #f0f4fa;
-        }
-        .tabulator-row:hover {
-            background: #f5f9ff;
-        }
-        .tabulator .tabulator-footer {
-            background: white;
-            border-top: 1px solid #eef3fc;
-        }
-
-        /* loader personalizado */
         .loader-overlay {
             display: flex;
             justify-content: center;
@@ -225,7 +186,6 @@
             padding: 50px;
             background: white;
             border-radius: 28px;
-            margin-bottom: 30px;
         }
         .loader-spinner {
             width: 42px;
@@ -236,8 +196,6 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* mensajes de error */
         .error-message {
             background: #fff5f5;
             color: #c2410c;
@@ -245,10 +203,8 @@
             padding: 16px 24px;
             border-radius: 20px;
             font-weight: 500;
-            margin-bottom: 24px;
+            margin: 20px;
         }
-
-        /* footer */
         .dashboard-footer {
             text-align: center;
             margin-top: 40px;
@@ -257,14 +213,25 @@
             font-size: 0.75rem;
             border-top: 1px solid #dfe8f2;
         }
-
-        /* responsivo */
         @media (max-width: 700px) {
             body { padding: 20px 16px; }
             .kpi-number { font-size: 1.7rem; }
             .table-header { flex-direction: column; align-items: stretch; }
             .search-wrapper input { width: 100%; }
-            .page-header { flex-direction: column; align-items: flex-start; }
+        }
+        /* Estilos Tabulator */
+        .tabulator {
+            font-family: 'Inter', sans-serif;
+            border: none !important;
+            border-radius: 0 0 24px 24px !important;
+        }
+        .tabulator .tabulator-header {
+            background: #f9fbfe;
+            border-bottom: 1px solid #e9eff5;
+            font-weight: 600;
+        }
+        .tabulator-row:hover {
+            background: #f5f9ff;
         }
     </style>
 </head>
@@ -285,7 +252,7 @@
     <div class="kpis-grid">
         <div class="kpi-card">
             <div class="kpi-info">
-                <h3><i class="fas fa-database" style="margin-right: 4px;"></i> Total registros</h3>
+                <h3><i class="fas fa-database"></i> Total registros</h3>
                 <div class="kpi-number" id="totalRegistros">0</div>
             </div>
             <div class="kpi-icon"><i class="fas fa-layer-group"></i></div>
@@ -308,13 +275,13 @@
             <div class="kpi-info">
                 <h3><i class="fas fa-clock"></i> Actualización auto</h3>
                 <div class="kpi-number" style="font-size:1.3rem;">c/ 5 min</div>
-                <div style="font-size:0.7rem; color:#5f7f9e;">siguiente recarga</div>
+                <div style="font-size:0.7rem; color:#5f7f9e;">click badge ↻ manual</div>
             </div>
             <div class="kpi-icon"><i class="fas fa-hourglass-half"></i></div>
         </div>
     </div>
 
-    <!-- Tabla 1: Inventario por Lote -->
+    <!-- Tabla 1 -->
     <div class="table-card">
         <div class="table-header">
             <h2><i class="fas fa-clipboard-list"></i> Inventario por Lote</h2>
@@ -324,11 +291,11 @@
             </div>
         </div>
         <div class="table-container">
-            <div id="tabla1"></div>
+            <div id="tabla1"><div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando datos...</span></div></div>
         </div>
     </div>
 
-    <!-- Tabla 2: Resumen Inventario -->
+    <!-- Tabla 2 -->
     <div class="table-card">
         <div class="table-header">
             <h2><i class="fas fa-chart-pie"></i> Resumen Inventario</h2>
@@ -338,7 +305,7 @@
             </div>
         </div>
         <div class="table-container">
-            <div id="tabla2"></div>
+            <div id="tabla2"><div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando resumen...</span></div></div>
         </div>
     </div>
 
@@ -347,261 +314,180 @@
     </div>
 </div>
 
+<!-- Carga de Tabulator JS (asegurada) -->
 <script src="https://unpkg.com/tabulator-tables@5.6.2/dist/js/tabulator.min.js"></script>
 <script>
-    (function(){
-        // Configuración sheets (misma del original)
-        const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
-        const hoja1 = "Inv Consolidado";
-        const hoja2 = "Inv Detalle";
-        const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
-        const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
-
-        // Elementos DOM
-        const totalRegistrosSpan = document.getElementById("totalRegistros");
-        const materialesUnicosSpan = document.getElementById("materialesUnicos");
-        const totalUnidadesSpan = document.getElementById("totalUnidades");
-        const lastUpdateSpan = document.getElementById("lastUpdateTime");
-        
-        let tabla1 = null, tabla2 = null;
-        let dataTabla1 = [];
-        
-        // mostrar loading en tabla mientras fetch
-        function showLoadingTables() {
-            const t1div = document.getElementById("tabla1");
-            const t2div = document.getElementById("tabla2");
-            if(t1div) t1div.innerHTML = `<div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando lotes...</span></div>`;
-            if(t2div) t2div.innerHTML = `<div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando resumen...</span></div>`;
-        }
-        
-        function updateTimestamp() {
-            const now = new Date();
-            const formatted = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
-            lastUpdateSpan.innerText = `${formatted} hs`;
-        }
-        
-        // Calcular suma de CantidadDisp (convertir a número)
-        function calcularTotalUnidades(data) {
-            let total = 0;
-            for(let row of data) {
-                let val = row.CantidadDisp || row["CantidadDisp"] || row.cantidad || 0;
-                if(typeof val === 'string') val = val.replace(',', '.').replace(/[^0-9.-]/g, '');
-                const num = parseFloat(val);
-                if(!isNaN(num)) total += num;
+    (function() {
+        // Espera activa hasta que Tabulator esté disponible
+        function waitForTabulator(callback) {
+            if (typeof Tabulator !== 'undefined') {
+                callback();
+            } else {
+                console.log("Esperando a que Tabulator se cargue...");
+                setTimeout(function() { waitForTabulator(callback); }, 100);
             }
-            return total.toLocaleString('es-ES', { maximumFractionDigits: 0 });
         }
 
-        // formateo de números en tablas (opcional, pero para mostrar consistencia)
-        function formatNumber(value) {
-            if(value === undefined || value === null) return '';
-            let num = typeof value === 'string' ? parseFloat(value.replace(',', '.')) : value;
-            if(isNaN(num)) return value;
-            return num.toLocaleString('es-ES');
-        }
+        // Inicialización principal
+        function initApp() {
+            const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
+            const hoja1 = "Inv Consolidado";
+            const hoja2 = "Inv Detalle";
+            const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
+            const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
 
-        // --- CARGA TABLA 1 (Inventario lote) ---
-        fetch(url1)
-            .then(res => {
-                if(!res.ok) throw new Error(`Error HTTP ${res.status}`);
-                return res.json();
-            })
-            .then(data => {
-                dataTabla1 = data;
-                // actualizar KPIs
-                totalRegistrosSpan.innerText = data.length.toLocaleString();
-                const materialesSet = new Set(data.map(x => x.Material).filter(m => m && m.trim() !== ""));
-                materialesUnicosSpan.innerText = materialesSet.size.toLocaleString();
-                const totalUnidadesFormateado = calcularTotalUnidades(data);
-                totalUnidadesSpan.innerText = totalUnidadesFormateado;
-                updateTimestamp();
-                
-                // Inicializar Tabulator 1
-                if(tabla1) tabla1.destroy();
-                tabla1 = new Tabulator("#tabla1", {
-                    data: data,
-                    layout: "fitDataStretch",
-                    pagination: true,
-                    paginationSize: 20,
-                    paginationSizeSelector: [10, 20, 50, 100],
-                    movableColumns: true,
-                    responsiveLayout: "collapse",
-                    placeholder: "No hay datos coincidentes",
-                    columns: [
-                        { title: "Material", field: "Material", headerFilter: true, headerFilterPlaceholder: "filtrar", sorter: "string" },
-                        { title: "Texto breve", field: "Texto breve de material", headerFilter: true, headerFilterPlaceholder: "filtrar", sorter: "string" },
-                        { title: "Centro", field: "Centro", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { title: "Almacén", field: "Almacén", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { title: "Lote", field: "Lote", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { title: "Fecha Caducidad", field: "FechaCaducidad", headerFilter: true, headerFilterPlaceholder: "dd/mm/aaaa" },
-                        { 
-                            title: "Cantidad", 
-                            field: "CantidadDisp", 
-                            headerFilter: true,
-                            formatter: function(cell) {
-                                let val = cell.getValue();
-                                if(val === undefined || val === null) return "0";
-                                let num = parseFloat(String(val).replace(',', '.'));
-                                if(isNaN(num)) return val;
-                                return num.toLocaleString('es-ES');
-                            },
-                            hozAlign: "right"
-                        }
-                    ],
-                });
-                
-                // Evento de búsqueda personalizada (filtro global por varias columnas)
-                const inputBuscar1 = document.getElementById("buscar1");
-                if(inputBuscar1) {
-                    inputBuscar1.removeEventListener("keyup", window._buscar1Handler);
-                    window._buscar1Handler = function() {
-                        const value = this.value.trim();
-                        if(tabla1) {
-                            if(value === "") {
-                                tabla1.clearFilter();
-                            } else {
-                                tabla1.setFilter([
-                                    { field: "Material", type: "like", value: value },
-                                    { field: "Texto breve de material", type: "like", value: value },
-                                    { field: "Lote", type: "like", value: value }
+            let tabla1 = null, tabla2 = null;
+            const totalRegistrosSpan = document.getElementById("totalRegistros");
+            const materialesUnicosSpan = document.getElementById("materialesUnicos");
+            const totalUnidadesSpan = document.getElementById("totalUnidades");
+            const lastUpdateSpan = document.getElementById("lastUpdateTime");
+
+            function updateTimestamp() {
+                const now = new Date();
+                const formatted = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                if (lastUpdateSpan) lastUpdateSpan.innerText = `${formatted} hs`;
+            }
+
+            function calcularTotalUnidades(data) {
+                let total = 0;
+                for(let row of data) {
+                    let val = row.CantidadDisp || row["CantidadDisp"] || 0;
+                    if(typeof val === 'string') val = val.replace(',', '.').replace(/[^0-9.-]/g, '');
+                    const num = parseFloat(val);
+                    if(!isNaN(num)) total += num;
+                }
+                return total.toLocaleString('es-ES', { maximumFractionDigits: 0 });
+            }
+
+            function formatNumber(value) {
+                if(value === undefined || value === null) return '';
+                let num = typeof value === 'string' ? parseFloat(value.replace(',', '.')) : value;
+                if(isNaN(num)) return value;
+                return num.toLocaleString('es-ES');
+            }
+
+            // ----- Tabla 1 (Lotes) -----
+            fetch(url1)
+                .then(res => {
+                    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    totalRegistrosSpan.innerText = data.length.toLocaleString();
+                    const materialesSet = new Set(data.map(x => x.Material).filter(m => m && m.trim() !== ""));
+                    materialesUnicosSpan.innerText = materialesSet.size.toLocaleString();
+                    totalUnidadesSpan.innerText = calcularTotalUnidades(data);
+                    updateTimestamp();
+
+                    if (tabla1) tabla1.destroy();
+                    tabla1 = new Tabulator("#tabla1", {
+                        data: data,
+                        layout: "fitDataStretch",
+                        pagination: true,
+                        paginationSize: 20,
+                        paginationSizeSelector: [10, 20, 50, 100],
+                        movableColumns: true,
+                        responsiveLayout: "collapse",
+                        placeholder: "No hay datos coincidentes",
+                        columns: [
+                            { title: "Material", field: "Material", headerFilter: true, headerFilterPlaceholder: "filtrar" },
+                            { title: "Texto breve", field: "Texto breve de material", headerFilter: true },
+                            { title: "Centro", field: "Centro", headerFilter: true },
+                            { title: "Almacén", field: "Almacén", headerFilter: true },
+                            { title: "Lote", field: "Lote", headerFilter: true },
+                            { title: "Fecha Caducidad", field: "FechaCaducidad", headerFilter: true },
+                            { title: "Cantidad", field: "CantidadDisp", headerFilter: true, formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" }
+                        ],
+                    });
+
+                    const inputBuscar1 = document.getElementById("buscar1");
+                    if(inputBuscar1) {
+                        inputBuscar1.onkeyup = () => {
+                            const val = inputBuscar1.value.trim();
+                            if(tabla1) {
+                                if(val === "") tabla1.clearFilter();
+                                else tabla1.setFilter([
+                                    { field: "Material", type: "like", value: val },
+                                    { field: "Texto breve de material", type: "like", value: val },
+                                    { field: "Lote", type: "like", value: val }
                                 ], "OR");
                             }
-                        }
-                    };
-                    inputBuscar1.addEventListener("keyup", window._buscar1Handler);
-                }
-            })
-            .catch(err => {
-                console.error("Error cargando Inv Consolidado:", err);
-                document.getElementById("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error al cargar datos: ${err.message}. Verifique conexión o permisos.</div>`;
-                totalRegistrosSpan.innerText = "Error";
-                materialesUnicosSpan.innerText = "Error";
-                totalUnidadesSpan.innerText = "Error";
-            });
-        
-        // --- CARGA TABLA 2 (Resumen) ---
-        fetch(url2)
-            .then(res => {
-                if(!res.ok) throw new Error(`Error HTTP ${res.status}`);
-                return res.json();
-            })
-            .then(data => {
-                if(tabla2) tabla2.destroy();
-                tabla2 = new Tabulator("#tabla2", {
-                    data: data,
-                    layout: "fitDataStretch",
-                    pagination: true,
-                    paginationSize: 20,
-                    paginationSizeSelector: [10, 20, 50, 100],
-                    movableColumns: true,
-                    responsiveLayout: "collapse",
-                    placeholder: "No hay registros en resumen",
-                    columns: [
-                        { title: "Condición", field: "Condicion", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { title: "Material", field: "Material", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { title: "Texto", field: "Texto breve de material", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                        { 
-                            title: "Disponible", 
-                            field: "Disponible 1031-1030", 
-                            headerFilter: true,
-                            formatter: (c) => formatNumber(c.getValue()),
-                            hozAlign: "right"
-                        },
-                        { 
-                            title: "Inv 1017", 
-                            field: "Inv 1017", 
-                            headerFilter: true,
-                            formatter: (c) => formatNumber(c.getValue()),
-                            hozAlign: "right"
-                        },
-                        { 
-                            title: "Inv 1018", 
-                            field: "Inv 1018", 
-                            headerFilter: true,
-                            formatter: (c) => formatNumber(c.getValue()),
-                            hozAlign: "right"
-                        },
-                        { 
-                            title: "Inv Suma", 
-                            field: "Inv Suma", 
-                            headerFilter: true,
-                            formatter: (c) => formatNumber(c.getValue()),
-                            hozAlign: "right"
-                        },
-                        { 
-                            title: "Precio", 
-                            field: "Precio", 
-                            headerFilter: true,
-                            formatter: (c) => {
+                        };
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error en datos de lotes: ${err.message}</div>`;
+                    totalRegistrosSpan.innerText = "Error";
+                    materialesUnicosSpan.innerText = "Error";
+                    totalUnidadesSpan.innerText = "Error";
+                });
+
+            // ----- Tabla 2 (Resumen) -----
+            fetch(url2)
+                .then(res => {
+                    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    if (tabla2) tabla2.destroy();
+                    tabla2 = new Tabulator("#tabla2", {
+                        data: data,
+                        layout: "fitDataStretch",
+                        pagination: true,
+                        paginationSize: 20,
+                        paginationSizeSelector: [10, 20, 50, 100],
+                        movableColumns: true,
+                        placeholder: "No hay registros",
+                        columns: [
+                            { title: "Condición", field: "Condicion", headerFilter: true },
+                            { title: "Material", field: "Material", headerFilter: true },
+                            { title: "Texto", field: "Texto breve de material", headerFilter: true },
+                            { title: "Disponible", field: "Disponible 1031-1030", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
+                            { title: "Inv 1017", field: "Inv 1017", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
+                            { title: "Inv 1018", field: "Inv 1018", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
+                            { title: "Inv Suma", field: "Inv Suma", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
+                            { title: "Precio", field: "Precio", formatter: (c) => {
                                 let val = c.getValue();
-                                if(val === undefined || val === null) return "";
+                                if(val === undefined) return "";
                                 let num = parseFloat(String(val).replace(',', '.'));
                                 if(isNaN(num)) return val;
                                 return num.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
-                            },
-                            hozAlign: "right"
-                        }
-                    ],
-                });
-                
-                // Búsqueda global para tabla2 (sobre material y texto)
-                const inputBuscar2 = document.getElementById("buscar2");
-                if(inputBuscar2) {
-                    inputBuscar2.removeEventListener("keyup", window._buscar2Handler);
-                    window._buscar2Handler = function() {
-                        const value = this.value.trim();
-                        if(tabla2) {
-                            if(value === "") {
-                                tabla2.clearFilter();
-                            } else {
-                                tabla2.setFilter([
-                                    { field: "Material", type: "like", value: value },
-                                    { field: "Texto breve de material", type: "like", value: value },
-                                    { field: "Condicion", type: "like", value: value }
+                            }, hozAlign: "right" }
+                        ],
+                    });
+
+                    const inputBuscar2 = document.getElementById("buscar2");
+                    if(inputBuscar2) {
+                        inputBuscar2.onkeyup = () => {
+                            const val = inputBuscar2.value.trim();
+                            if(tabla2) {
+                                if(val === "") tabla2.clearFilter();
+                                else tabla2.setFilter([
+                                    { field: "Material", type: "like", value: val },
+                                    { field: "Texto breve de material", type: "like", value: val },
+                                    { field: "Condicion", type: "like", value: val }
                                 ], "OR");
                             }
-                        }
-                    };
-                    inputBuscar2.addEventListener("keyup", window._buscar2Handler);
-                }
-            })
-            .catch(err => {
-                console.error("Error cargando Inv Detalle:", err);
-                document.getElementById("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error al cargar resumen: ${err.message}. Revise la fuente de datos.</div>`;
-            });
-        
-        // Recarga automática cada 5 minutos (300000 ms) manteniendo estilo y sin perder filtros UI
-        let reloadInterval = setInterval(() => {
-            // Recargar la página completa para mantener consistencia visual y de datos
-            // pero como la petición es externa, simplemente recargamos la página.
-            // evitamos acumular intervalos
-            window.location.reload();
-        }, 300000);
-        
-        // opcional: mostrar cuenta regresiva o tooltip (no necesario)
-        // Si el usuario quiere un refresco manual sutil, se puede agregar, pero mantiene original
-        // agregamos un pequeño detalle: al hacer click en el badge de última actualización refresco manual
-        const badge = document.getElementById("lastUpdateBadge");
-        if(badge) {
-            badge.style.cursor = "pointer";
-            badge.addEventListener("click", () => {
-                window.location.reload();
-            });
-            badge.title = "Haz clic para recargar manualmente";
+                        };
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error en resumen: ${err.message}</div>`;
+                });
+
+            // Recarga automática cada 5 minutos
+            setInterval(() => { window.location.reload(); }, 300000);
+            
+            // Actualización manual con click en badge
+            const badge = document.getElementById("lastUpdateBadge");
+            if(badge) badge.onclick = () => window.location.reload();
+            updateTimestamp();
         }
-        
-        // Mostrar timestamp inicial adicional
-        updateTimestamp();
-        
-        // Manejar que si por alguna razón el fetch de tabla1 se demora, al menos mostrar loading
-        showLoadingTables();
-        
-        // pegar un pequeño observer para cuando los tabuladores se dibujen, ocultar loaders
-        setTimeout(() => {
-            if(!tabla1 && document.getElementById("tabla1").innerHTML.includes("loader-spinner")) {
-                // aún cargando, pero el fetch ya debió resolver; si no, mantenemos solo el mensaje
-            }
-        }, 2000);
+
+        // Iniciar solo cuando Tabulator esté listo
+        waitForTabulator(initApp);
     })();
 </script>
 </body>
