@@ -498,7 +498,7 @@
                                 field: "Inv Suma", 
                                 formatter: (c) => `<b>${formatNumber(c.getValue())}</b>`, 
                                 hozAlign: "right" 
-                            }
+                            },
                             { title: "Precio (€)", field: "Precio", width: 120, formatter: (c) => {
                                 let val = c.getValue();
                                 if(!val) return "";
@@ -518,7 +518,7 @@
                             if(val === "") {
                                 t2.clearFilter();
                             } else {
-                                t2.setFilter([[
+                                t2.setFilter([
                                     { field: "Material", type: "like", value: val },
                                     { field: "Texto breve de material", type: "like", value: val },
                                     { field: "Lote", type: "like", value: val }
