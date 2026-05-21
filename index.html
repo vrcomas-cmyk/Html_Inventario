@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Inventario DEGASA · Dashboard</title>
     
-    <!-- Tabulator CSS (estilo moderno) -->
     <link href="https://unpkg.com/tabulator-tables@5.6.2/dist/css/tabulator.min.css" rel="stylesheet">
-    <!-- Google Fonts + Font Awesome 6 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
@@ -20,9 +18,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f0f2f8;
+            background: #f4f6fa;
             padding: 32px 24px;
-            color: #1a2634;
+            color: #1e293b;
         }
 
         .dashboard-container {
@@ -32,109 +30,144 @@
 
         /* Header */
         .page-header {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             gap: 16px;
-            border-bottom: 2px solid rgba(0, 112, 243, 0.2);
-            padding-bottom: 16px;
+            background: white;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         .title-section h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #0b2b44, #0070f3);
-            background-clip: text;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f172a, #2563eb);
             -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
+            -webkit-text-fill-color: transparent;
             display: inline-flex;
             align-items: center;
             gap: 12px;
         }
         .title-section h1 i {
-            background: none;
-            color: #0070f3;
-            font-size: 2rem;
+            color: #2563eb;
+            -webkit-text-fill-color: initial;
         }
         .badge-update {
-            background: white;
-            padding: 8px 18px;
-            border-radius: 60px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-            color: #2c3e58;
-            border: 1px solid #e2e8f0;
+            background: #f0fdf4;
+            padding: 10px 20px;
+            border-radius: 99s9px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #166534;
+            border: 1px solid #bbf7d0;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .badge-update:hover {
-            background: #f0f7ff;
-            border-color: #0070f3;
-        }
-        .badge-update i {
-            margin-right: 8px;
-            color: #2e7d32;
+            background: #dcfce7;
+            transform: scale(1.02);
         }
 
         /* KPIs Grid */
         .kpis-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
         .kpi-card {
             background: white;
-            border-radius: 28px;
-            padding: 1.2rem 1.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.03);
-            transition: all 0.2s ease;
-            border: 1px solid #edf2f7;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .kpi-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
-            border-color: #cbdff2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         .kpi-info h3 {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #5b6e8c;
-            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 6px;
         }
         .kpi-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
-            color: #0f2b3d;
-            line-height: 1.2;
+            color: #0f172a;
         }
         .kpi-icon {
-            font-size: 2.6rem;
-            opacity: 0.7;
-            color: #0070f3;
+            font-size: 2.2rem;
+            color: #3b82f6;
+            opacity: 0.8;
         }
 
-        /* Tablas tipo card */
+        /* Sistema de Navegación por Pestañas (Tabs) */
+        .tabs-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #e2e8f0;
+            padding: 6px;
+            border-radius: 14px;
+            width: fit-content;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #475569;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn.active {
+            background: white;
+            color: #2563eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+        }
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.5);
+            color: #1e293b;
+        }
+
+        /* Contenedores de Pestañas */
+        .tab-panel {
+            display: block;
+        }
+        .tab-panel.hidden {
+            display: none;
+        }
+
+        /* Contenedor de Tablas tipo Card */
         .table-card {
             background: white;
-            border-radius: 28px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
             overflow: hidden;
-            border: 1px solid #eef3fc;
         }
         .table-header {
-            padding: 1.2rem 1.8rem;
-            background: #ffffff;
-            border-bottom: 1px solid #eef2f8;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -142,96 +175,111 @@
             gap: 16px;
         }
         .table-header h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #1e2f41;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .table-header h2 i {
-            color: #0070f3;
+            gap: 8px;
         }
         .search-wrapper {
             display: flex;
             align-items: center;
-            background: #f8fafd;
-            border-radius: 60px;
+            background: #f8fafc;
+            border-radius: 9999px;
             padding: 0 16px;
-            border: 1px solid #e2edf7;
+            border: 1px solid #cbd5e1;
             transition: all 0.2s;
         }
         .search-wrapper i {
-            color: #8ca0b7;
+            color: #94a3b8;
         }
         .search-wrapper input {
             border: none;
             background: transparent;
-            padding: 12px 12px 12px 10px;
+            padding: 10px 4px 10px 10px;
             font-size: 0.9rem;
-            width: 240px;
-            font-family: 'Inter', monospace;
+            width: 280px;
             outline: none;
             font-weight: 500;
+            color: #334155;
         }
         .search-wrapper:focus-within {
-            border-color: #0070f3;
-            box-shadow: 0 0 0 3px rgba(0,112,243,0.1);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
             background: white;
         }
+
+        /* Loaders y Errores */
         .loader-overlay {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 50px;
+            padding: 60px;
             background: white;
-            border-radius: 28px;
+            font-weight: 500;
+            color: #64748b;
         }
         .loader-spinner {
-            width: 42px;
-            height: 42px;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid #0070f3;
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #2563eb;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.6s linear infinite;
+            margin-right: 12px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         .error-message {
-            background: #fff5f5;
-            color: #c2410c;
-            border-left: 6px solid #f97316;
+            background: #fef2f2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
             padding: 16px 24px;
-            border-radius: 20px;
+            border-radius: 12px;
             font-weight: 500;
-            margin: 20px;
+            margin: 24px;
         }
+
         .dashboard-footer {
             text-align: center;
             margin-top: 40px;
             padding-top: 20px;
-            color: #6c86a3;
-            font-size: 0.75rem;
-            border-top: 1px solid #dfe8f2;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            border-top: 1px solid #e2e8f0;
         }
-        @media (max-width: 700px) {
-            body { padding: 20px 16px; }
-            .kpi-number { font-size: 1.7rem; }
+
+        @media (max-width: 768px) {
+            body { padding: 16px; }
             .table-header { flex-direction: column; align-items: stretch; }
             .search-wrapper input { width: 100%; }
+            .tabs-navigation { width: 100%; }
+            .tab-btn { flex: 1; justify-content: center; }
         }
-        /* Estilos Tabulator */
+
+        /* Customización limpia para la UI de Tabulator */
         .tabulator {
-            font-family: 'Inter', sans-serif;
             border: none !important;
-            border-radius: 0 0 24px 24px !important;
+            background-color: transparent !important;
         }
         .tabulator .tabulator-header {
-            background: #f9fbfe;
-            border-bottom: 1px solid #e9eff5;
-            font-weight: 600;
+            background-color: #f8fafc !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            color: #475569 !important;
+        }
+        .tabulator .tabulator-header .tabulator-col {
+            background-color: #f8fafc !important;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+        .tabulator-row {
+            border-bottom: 1px solid #f1f5f9 !important;
+        }
+        .tabulator-row.tabulator-row-even {
+            background-color: #f8fafc !important;
         }
         .tabulator-row:hover {
-            background: #f5f9ff;
+            background-color: #f0fdf4 !important;
         }
     </style>
 </head>
@@ -240,103 +288,113 @@
     
     <div class="page-header">
         <div class="title-section">
-            <h1><i class="fas fa-boxes"></i> Portal Inventario DEGASA</h1>
-            <p style="font-size: 0.85rem; color: #4b6b8f; margin-top: 8px;">Gestión inteligente de materiales y lotes</p>
+            <h1><i class="fas fa-boxes-stacked"></i> Portal Inventario DEGASA</h1>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Control y visualización de materiales en tiempo real</p>
         </div>
-        <div class="badge-update" id="lastUpdateBadge">
-            <i class="fas fa-sync-alt"></i> <span id="lastUpdateTime">Cargando...</span>
+        <div class="badge-update" id="lastUpdateBadge" title="Click para recargar manualmente">
+            <i class="fas fa-arrows-rotate"></i> Actualizado: <span id="lastUpdateTime">Cargando...</span>
         </div>
     </div>
 
-    <!-- KPIs mejorados -->
     <div class="kpis-grid">
         <div class="kpi-card">
             <div class="kpi-info">
-                <h3><i class="fas fa-database"></i> Total registros</h3>
+                <h3>Total Lotes Registrados</h3>
                 <div class="kpi-number" id="totalRegistros">0</div>
             </div>
-            <div class="kpi-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="kpi-icon"><i class="fas fa-barcode"></i></div>
         </div>
         <div class="kpi-card">
             <div class="kpi-info">
-                <h3><i class="fas fa-cubes"></i> Materiales únicos</h3>
+                <h3>Materiales Únicos</h3>
                 <div class="kpi-number" id="materialesUnicos">0</div>
             </div>
-            <div class="kpi-icon"><i class="fas fa-tag"></i></div>
+            <div class="kpi-icon"><i class="fas fa-tags"></i></div>
         </div>
         <div class="kpi-card">
             <div class="kpi-info">
-                <h3><i class="fas fa-weight-hanging"></i> Stock total (unidades)</h3>
+                <h3>Stock Global (Unidades)</h3>
                 <div class="kpi-number" id="totalUnidades">0</div>
             </div>
-            <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="kpi-icon"><i class="fas fa-cubes"></i></div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card" style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color:#bfdbfe;">
             <div class="kpi-info">
-                <h3><i class="fas fa-clock"></i> Actualización auto</h3>
-                <div class="kpi-number" style="font-size:1.3rem;">c/ 5 min</div>
-                <div style="font-size:0.7rem; color:#5f7f9e;">click badge ↻ manual</div>
+                <h3>Sincronización</h3>
+                <div class="kpi-number" style="font-size:1.4rem; color:#1e40af;">Cada 5 min</div>
+                <div style="font-size:0.75rem; color:#1e40af; font-weight: 500;">Modo automático activo</div>
             </div>
-            <div class="kpi-icon"><i class="fas fa-hourglass-half"></i></div>
+            <div class="kpi-icon" style="color:#2563eb;"><i class="fas fa-cloud-arrow-down"></i></div>
         </div>
     </div>
 
-    <!-- Tabla 1 -->
-    <div class="table-card">
-        <div class="table-header">
-            <h2><i class="fas fa-clipboard-list"></i> Inventario por Lote</h2>
-            <div class="search-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="buscar1" placeholder="Buscar por Material, Lote, Texto...">
+    <div class="tabs-navigation">
+        <button class="tab-btn active" data-panel="panel-lotes">
+            <i class="fas fa-clipboard-list"></i> Inventario por Lote
+        </button>
+        <button class="tab-btn" data-panel="panel-resumen">
+            <i class="fas fa-chart-pie"></i> Resumen General
+        </button>
+    </div>
+
+    <div id="panel-lotes" class="tab-panel">
+        <div class="table-card">
+            <div class="table-header">
+                <h2><i class="fas fa-pallet" style="color: #2563eb;"></i> Detalle de Existencias por Lote</h2>
+                <div class="search-wrapper">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="text" id="buscar1" placeholder="Buscar por Material, Lote o Descripción...">
+                </div>
             </div>
-        </div>
-        <div class="table-container">
-            <div id="tabla1"><div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando datos...</span></div></div>
+            <div id="tabla1">
+                <div class="loader-overlay"><div class="loader-spinner"></div>Cargando datos del servidor...</div>
+            </div>
         </div>
     </div>
 
-    <!-- Tabla 2 -->
-    <div class="table-card">
-        <div class="table-header">
-            <h2><i class="fas fa-chart-pie"></i> Resumen Inventario</h2>
-            <div class="search-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="buscar2" placeholder="Buscar por Material, Condición...">
+    <div id="panel-resumen" class="tab-panel hidden">
+        <div class="table-card">
+            <div class="table-header">
+                <h2><i class="fas fa-calculator" style="color: #2563eb;"></i> Consolidado y Precios</h2>
+                <div class="search-wrapper">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="text" id="buscar2" placeholder="Buscar por Material o Condición...">
+                </div>
             </div>
-        </div>
-        <div class="table-container">
-            <div id="tabla2"><div class="loader-overlay"><div class="loader-spinner"></div><span style="margin-left:12px;">Cargando resumen...</span></div></div>
+            <div id="tabla2">
+                <div class="loader-overlay"><div class="loader-spinner"></div>Construyendo matriz de resumen...</div>
+            </div>
         </div>
     </div>
 
     <div class="dashboard-footer">
-        <i class="fas fa-charging-station"></i> Datos sincronizados desde hoja de cálculo · DEGASA Logistics
+        <i class="fas fa-database"></i> Datos estructurados dinámicamente desde Google Sheets · DEGASA Logistics Division
     </div>
 </div>
 
-<!-- Carga de Tabulator JS (asegurada) -->
 <script src="https://unpkg.com/tabulator-tables@5.6.2/dist/js/tabulator.min.js"></script>
 <script>
     (function() {
-        // Espera activa hasta que Tabulator esté disponible
         function waitForTabulator(callback) {
             if (typeof Tabulator !== 'undefined') {
                 callback();
             } else {
-                console.log("Esperando a que Tabulator se cargue...");
-                setTimeout(function() { waitForTabulator(callback); }, 100);
+                setTimeout(function() { waitForTabulator(callback); }, 50);
             }
         }
 
-        // Inicialización principal
         function initApp() {
             const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
-            const hoja1 = "Inv Consolidado";
-            const hoja2 = "Inv Detalle";
+            
+            // Solución Bug 1: Codificación explícita de caracteres especiales y espacios para OpenSheet
+            const hoja1 = encodeURIComponent("Inv Consolidado");
+            const hoja2 = encodeURIComponent("Inv Detalle");
+            
             const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
             const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
 
-            let tabla1 = null, tabla2 = null;
+            let t1 = null, t2 = null;
+            
             const totalRegistrosSpan = document.getElementById("totalRegistros");
             const materialesUnicosSpan = document.getElementById("materialesUnicos");
             const totalUnidadesSpan = document.getElementById("totalUnidades");
@@ -344,8 +402,7 @@
 
             function updateTimestamp() {
                 const now = new Date();
-                const formatted = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
-                if (lastUpdateSpan) lastUpdateSpan.innerText = `${formatted} hs`;
+                lastUpdateSpan.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')} hrs`;
             }
 
             function calcularTotalUnidades(data) {
@@ -360,18 +417,15 @@
             }
 
             function formatNumber(value) {
-                if(value === undefined || value === null) return '';
+                if(value === undefined || value === null || value === '') return '0';
                 let num = typeof value === 'string' ? parseFloat(value.replace(',', '.')) : value;
                 if(isNaN(num)) return value;
                 return num.toLocaleString('es-ES');
             }
 
-            // ----- Tabla 1 (Lotes) -----
+            // ----- Inicialización Pestaña 1 (Lotes) -----
             fetch(url1)
-                .then(res => {
-                    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-                    return res.json();
-                })
+                .then(res => { if(!res.ok) throw new Error(`HTTP Error ${res.status}`); return res.json(); })
                 .then(data => {
                     totalRegistrosSpan.innerText = data.length.toLocaleString();
                     const materialesSet = new Set(data.map(x => x.Material).filter(m => m && m.trim() !== ""));
@@ -379,114 +433,128 @@
                     totalUnidadesSpan.innerText = calcularTotalUnidades(data);
                     updateTimestamp();
 
-                    if (tabla1) tabla1.destroy();
-                    tabla1 = new Tabulator("#tabla1", {
+                    t1 = new Tabulator("#tabla1", {
                         data: data,
-                        layout: "fitDataStretch",
-                        pagination: true,
-                        paginationSize: 20,
-                        paginationSizeSelector: [10, 20, 50, 100],
-                        movableColumns: true,
-                        responsiveLayout: "collapse",
-                        placeholder: "No hay datos coincidentes",
+                        layout: "fitColumns",
+                        pagination: "local",
+                        paginationSize: 15,
+                        paginationSizeSelector: [15, 30, 50, 100],
+                        responsiveLayout: "hide",
+                        placeholder: "No se encontraron registros de lotes disponibles",
                         columns: [
-                            { title: "Material", field: "Material", headerFilter: true, headerFilterPlaceholder: "filtrar" },
-                            { title: "Texto breve", field: "Texto breve de material", headerFilter: true },
-                            { title: "Centro", field: "Centro", headerFilter: true },
-                            { title: "Almacén", field: "Almacén", headerFilter: true },
-                            { title: "Lote", field: "Lote", headerFilter: true },
-                            { title: "Fecha Caducidad", field: "FechaCaducidad", headerFilter: true },
-                            { title: "Cantidad", field: "CantidadDisp", headerFilter: true, formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" }
+                            { title: "Material", field: "Material", width: 140, headerSort: true },
+                            { title: "Texto breve de material", field: "Texto breve de material", minWidth: 250 },
+                            { title: "Centro", field: "Centro", width: 100, hozAlign: "center" },
+                            { title: "Almacén", field: "Almacén", width: 100, hozAlign: "center" },
+                            { title: "Lote", field: "Lote", width: 140 },
+                            { title: "Fecha Caducidad", field: "FechaCaducidad", width: 150, hozAlign: "center" },
+                            { title: "Cant. Disp", field: "CantidadDisp", width: 130, formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" }
                         ],
                     });
 
+                    // Solución Bug 2: Arreglo bidimensional para Filtro OR correcto en Tabulator v5
                     const inputBuscar1 = document.getElementById("buscar1");
                     if(inputBuscar1) {
-                        inputBuscar1.onkeyup = () => {
+                        inputBuscar1.addEventListener("keyup", () => {
                             const val = inputBuscar1.value.trim();
-                            if(tabla1) {
-                                if(val === "") tabla1.clearFilter();
-                                else tabla1.setFilter([
+                            if(!t1) return;
+                            if(val === "") {
+                                t1.clearFilter();
+                            } else {
+                                t1.setFilter([[
                                     { field: "Material", type: "like", value: val },
                                     { field: "Texto breve de material", type: "like", value: val },
                                     { field: "Lote", type: "like", value: val }
-                                ], "OR");
+                                ]]);
                             }
-                        };
+                        });
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    document.getElementById("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error en datos de lotes: ${err.message}</div>`;
-                    totalRegistrosSpan.innerText = "Error";
-                    materialesUnicosSpan.innerText = "Error";
-                    totalUnidadesSpan.innerText = "Error";
+                    document.getElementById("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con Inv Consolidado: ${err.message}</div>`;
                 });
 
-            // ----- Tabla 2 (Resumen) -----
+            // ----- Inicialización Pestaña 2 (Resumen) -----
             fetch(url2)
-                .then(res => {
-                    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-                    return res.json();
-                })
+                .then(res => { if(!res.ok) throw new Error(`HTTP Error ${res.status}`); return res.json(); })
                 .then(data => {
-                    if (tabla2) tabla2.destroy();
-                    tabla2 = new Tabulator("#tabla2", {
+                    t2 = new Tabulator("#tabla2", {
                         data: data,
-                        layout: "fitDataStretch",
-                        pagination: true,
-                        paginationSize: 20,
-                        paginationSizeSelector: [10, 20, 50, 100],
-                        movableColumns: true,
-                        placeholder: "No hay registros",
+                        layout: "fitColumns",
+                        pagination: "local",
+                        paginationSize: 15,
+                        paginationSizeSelector: [15, 30, 50, 100],
+                        placeholder: "No hay registros consolidados",
                         columns: [
-                            { title: "Condición", field: "Condicion", headerFilter: true },
-                            { title: "Material", field: "Material", headerFilter: true },
-                            { title: "Texto", field: "Texto breve de material", headerFilter: true },
-                            { title: "Disponible", field: "Disponible 1031-1030", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
+                            { title: "Condición", field: "Condicion", width: 130 },
+                            { title: "Material", field: "Material", width: 130 },
+                            { title: "Texto Informativo", field: "Texto breve de material", minWidth: 220 },
+                            { title: "Disp 1031-1030", field: "Disponible 1031-1030", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
                             { title: "Inv 1017", field: "Inv 1017", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
                             { title: "Inv 1018", field: "Inv 1018", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { title: "Inv Suma", field: "Inv Suma", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { title: "Precio", field: "Precio", formatter: (c) => {
+                            { title: "Inv Suma", field: "Inv Suma", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right", fontStyle: "bold" },
+                            { title: "Precio (€)", field: "Precio", width: 120, formatter: (c) => {
                                 let val = c.getValue();
-                                if(val === undefined) return "";
+                                if(!val) return "";
                                 let num = parseFloat(String(val).replace(',', '.'));
                                 if(isNaN(num)) return val;
-                                return num.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
+                                return num.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
                             }, hozAlign: "right" }
                         ],
                     });
 
+                    // Filtro OR para la tabla 2
                     const inputBuscar2 = document.getElementById("buscar2");
                     if(inputBuscar2) {
-                        inputBuscar2.onkeyup = () => {
+                        inputBuscar2.addEventListener("keyup", () => {
                             const val = inputBuscar2.value.trim();
-                            if(tabla2) {
-                                if(val === "") tabla2.clearFilter();
-                                else tabla2.setFilter([
+                            if(!t2) return;
+                            if(val === "") {
+                                t2.clearFilter();
+                            } else {
+                                t2.setFilter([[
                                     { field: "Material", type: "like", value: val },
                                     { field: "Texto breve de material", type: "like", value: val },
                                     { field: "Condicion", type: "like", value: val }
-                                ], "OR");
+                                ]]);
                             }
-                        };
+                        });
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    document.getElementById("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error en resumen: ${err.message}</div>`;
+                    document.getElementById("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con Inv Detalle: ${err.message}</div>`;
                 });
 
-            // Recarga automática cada 5 minutos
+            // ----- Lógica del Conmutador de Pestañas (Tabs) -----
+            const botonesPestaña = document.querySelectorAll('.tab-btn');
+            const panelesPestaña = document.querySelectorAll('.tab-panel');
+
+            botonesPestaña.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remover estado activo de botones y ocultar todos los paneles
+                    botonesPestaña.forEach(b => b.classList.remove('active'));
+                    panelesPestaña.forEach(p => p.classList.add('hidden'));
+
+                    // Activar panel seleccionado
+                    btn.classList.add('active');
+                    const panelId = btn.getAttribute('data-panel');
+                    document.getElementById(panelId).classList.remove('hidden');
+
+                    // Solución Bug 3: Re-dibujar tablas de Tabulator al volverse visibles
+                    if (panelId === 'panel-lotes' && t1) t1.redraw(true);
+                    if (panelId === 'panel-resumen' && t2) t2.redraw(true);
+                });
+            });
+
+            // Recarga automática de la App cada 5 minutos
             setInterval(() => { window.location.reload(); }, 300000);
             
-            // Actualización manual con click en badge
-            const badge = document.getElementById("lastUpdateBadge");
-            if(badge) badge.onclick = () => window.location.reload();
-            updateTimestamp();
+            // Evento manual sobre el Badge de estado
+            document.getElementById("lastUpdateBadge").onclick = () => window.location.reload();
         }
 
-        // Iniciar solo cuando Tabulator esté listo
         waitForTabulator(initApp);
     })();
 </script>
