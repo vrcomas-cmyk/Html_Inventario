@@ -387,8 +387,8 @@
             const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
             
             // Solución Bug 1: Codificación explícita de caracteres especiales y espacios para OpenSheet
-            const hoja1 = encodeURIComponent("InvConsolidado");
-            const hoja2 = encodeURIComponent("InvDetalle");
+            const hoja1 = encodeURIComponent("InvDetalle");
+            const hoja2 = encodeURIComponent("InvConsolidado");
             
             const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
             const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
