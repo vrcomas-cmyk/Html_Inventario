@@ -58,7 +58,7 @@
         .badge-update {
             background: #f0fdf4;
             padding: 10px 20px;
-            border-radius: 99s9px;
+            border-radius: 9999px;
             font-size: 0.85rem;
             font-weight: 600;
             color: #166534;
@@ -387,8 +387,8 @@
             const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
             
             // Solución Bug 1: Codificación explícita de caracteres especiales y espacios para OpenSheet
-            const hoja1 = encodeURIComponent("Inv Consolidado");
-            const hoja2 = encodeURIComponent("Inv Detalle");
+            const hoja1 = encodeURIComponent("Inv_Consolidado");
+            const hoja2 = encodeURIComponent("Inv_Detalle");
             
             const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja1}`;
             const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${hoja2}`;
@@ -461,11 +461,11 @@
                             if(val === "") {
                                 t1.clearFilter();
                             } else {
-                                t1.setFilter([[
+                                t1.setFilter([
                                     { field: "Material", type: "like", value: val },
                                     { field: "Texto breve de material", type: "like", value: val },
                                     { field: "Lote", type: "like", value: val }
-                                ]]);
+                                ]);
                             }
                         });
                     }
@@ -493,7 +493,12 @@
                             { title: "Disp 1031-1030", field: "Disponible 1031-1030", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
                             { title: "Inv 1017", field: "Inv 1017", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
                             { title: "Inv 1018", field: "Inv 1018", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right" },
-                            { title: "Inv Suma", field: "Inv Suma", formatter: (c) => formatNumber(c.getValue()), hozAlign: "right", fontStyle: "bold" },
+                            { 
+                                title: "Inv Suma", 
+                                field: "Inv Suma", 
+                                formatter: (c) => `<b>${formatNumber(c.getValue())}</b>`, 
+                                hozAlign: "right" 
+                            }
                             { title: "Precio (€)", field: "Precio", width: 120, formatter: (c) => {
                                 let val = c.getValue();
                                 if(!val) return "";
@@ -516,8 +521,8 @@
                                 t2.setFilter([[
                                     { field: "Material", type: "like", value: val },
                                     { field: "Texto breve de material", type: "like", value: val },
-                                    { field: "Condicion", type: "like", value: val }
-                                ]]);
+                                    { field: "Lote", type: "like", value: val }
+                                ]);
                             }
                         });
                     }
