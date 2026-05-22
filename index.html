@@ -540,7 +540,12 @@
 
     // Normaliza llaves: colapsa cualquier whitespace (incluye saltos de línea, tabs, NBSP) a un solo espacio
     function normalizeKey(key) {
-        return String(key).replace(/\s+/g, ' ').trim();
+        return String(key)
+            .toLowerCase()
+            .normalize("NFD")                       // Separa los acentos de las letras
+            .replace(/[\u0300-\u036f]/g, "")         // Borra los acentos completamente (á -> a)
+            .replace(/[^a-z0-9]/g, "")              // Elimina puntos, espacios, guiones, etc.
+            .trim();
     }
     function normalizeData(data) {
         return data.map(row => {
@@ -755,8 +760,20 @@
                     { title: "Disponible 1031-1032",     field: "Disponible 1031-1032",     minWidth: 130, hozAlign: "right" }
                 ];
                 const colsInventarios = INV_CODES.flatMap(code => ([
-                    { title: `Inv ${code}`,                   field: `Inv ${code}`,                   minWidth: 90,  hozAlign: "right", visible: false },
-                    { title: `Cant. en Tránsito Inv ${code}`, field: `Cant. en Tránsito Inv ${code}`, minWidth: 160, hozAlign: "right", visible: false }
+                    { 
+                        title: `Inv ${code}`, 
+                        field: normalizeKey(`Inv ${code}`), // <-- Ahora usa la función estricta
+                        minWidth: 90, 
+                        hozAlign: "right", 
+                        visible: false 
+                    },
+                    { 
+                        title: `Cant. en Tránsito Inv ${code}`, 
+                        field: normalizeKey(`Cant. en Tránsito Inv ${code}`), // <-- Ahora usa la función estricta
+                        minWidth: 160, 
+                        hozAlign: "right", 
+                        visible: false 
+                    }
                 ]));
                 const colsFijasFin = [
                     { title: "Inv Suma", field: "Inv Suma", minWidth: 100, hozAlign: "right" },
@@ -794,11 +811,15 @@
 
                 // Chips de inventario: alternan visibilidad de columnas Inv X y Cant. en Tránsito X
                 document.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
+                    // Dentro del document.querySelectorAll('.inv-chip[data-inv]').forEach...
                     chip.addEventListener('click', () => {
                         const code = chip.getAttribute('data-inv');
                         const isActive = chip.classList.toggle('active');
-                        const colInv = t2.getColumn(`Inv ${code}`);
-                        const colTra = t2.getColumn(`Cant. en Tránsito Inv ${code}`);
+                        
+                        // Pasamos el código por normalizeKey para encontrar la columna correcta
+                        const colInv = t2.getColumn(normalizeKey(`Inv ${code}`));
+                        const colTra = t2.getColumn(normalizeKey(`Cant. en Tránsito Inv ${code}`));
+                        
                         if (isActive) {
                             if (colInv) colInv.show();
                             if (colTra) colTra.show();
@@ -813,8 +834,11 @@
                     document.querySelectorAll('.inv-chip[data-inv]').forEach(c => {
                         c.classList.remove('active');
                         const code = c.getAttribute('data-inv');
-                        const colInv = t2.getColumn(`Inv ${code}`);
-                        const colTra = t2.getColumn(`Cant. en Tránsito Inv ${code}`);
+                        
+                        // También aquí usamos normalizeKey
+                        const colInv = t2.getColumn(normalizeKey(`Inv ${code}`));
+                        const colTra = t2.getColumn(normalizeKey(`Cant. en Tránsito Inv ${code}`));
+                        
                         if (colInv) colInv.hide();
                         if (colTra) colTra.hide();
                     });
