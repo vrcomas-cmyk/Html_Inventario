@@ -19,7 +19,7 @@
         }
         .dashboard-container { max-width: 1600px; margin: 0 auto; }
 
-        /* ============ Header ============ */
+        /* Header */
         .page-header {
             margin-bottom: 28px;
             display: flex; flex-wrap: wrap;
@@ -50,7 +50,7 @@
         }
         .badge-update:hover { background: #dcfce7; transform: scale(1.02); }
 
-        /* ============ KPIs ============ */
+        /* KPIs */
         .kpis-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -74,7 +74,7 @@
         .kpi-number { font-size: 2rem; font-weight: 800; color: #0f172a; }
         .kpi-icon { font-size: 2.2rem; color: #3b82f6; opacity: 0.8; }
 
-        /* ============ Tabs ============ */
+        /* Tabs */
         .tabs-navigation {
             display: flex; gap: 12px;
             margin-bottom: 20px;
@@ -95,7 +95,7 @@
         .tab-panel { display: block; }
         .tab-panel.hidden { display: none; }
 
-        /* ============ Top Inventarios Card ============ */
+        /* Top Inventarios */
         .top-inv-card {
             background: white;
             border-radius: 20px;
@@ -106,10 +106,11 @@
         }
         .top-inv-card h3 {
             font-size: 1.1rem; font-weight: 700;
-            margin-bottom: 16px; color: #0f172a;
+            margin-bottom: 4px; color: #0f172a;
             display: flex; align-items: center; gap: 10px;
         }
         .top-inv-card h3 i { color: #f59e0b; }
+        .top-inv-subtitle { font-size: 0.78rem; color: #94a3b8; margin-bottom: 16px; }
         .top-inv-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -144,12 +145,12 @@
             margin-top: 2px;
         }
         .top-inv-qty {
-            font-weight: 800; color: #2563eb; font-size: 1.05rem;
+            font-weight: 800; color: #059669; font-size: 1.05rem;
             text-align: right;
         }
         .top-inv-qty small { display: block; font-size: 0.65rem; color: #94a3b8; font-weight: 500; }
 
-        /* ============ Filter Builder ============ */
+        /* Filter Builder */
         .filter-builder {
             display: flex; align-items: center; gap: 10px;
             flex-wrap: wrap;
@@ -192,7 +193,6 @@
         }
         .filter-add-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
 
-        /* Filter chips row */
         .filter-row {
             display: flex; align-items: center;
             gap: 10px;
@@ -249,7 +249,7 @@
         .filter-clear-all:hover { color: #ef4444; border-color: #fca5a5; background: #fef2f2; }
         .filter-clear-all.hidden { display: none; }
 
-        /* ============ Inventory Column Selector ============ */
+        /* Inventory Column Selector */
         .inv-selector {
             padding: 14px 24px;
             border-bottom: 1px solid #e2e8f0;
@@ -287,7 +287,7 @@
         }
         .inv-chip-clear:hover { color: #ef4444; border-color: #fca5a5; background: #fef2f2; }
 
-        /* ============ Table Card ============ */
+        /* Table Card */
         .table-card {
             background: white;
             border-radius: 20px;
@@ -304,7 +304,7 @@
             display: flex; align-items: center; gap: 8px;
         }
 
-        /* ============ Loaders & Errors ============ */
+        /* Loaders & Errors */
         .loader-overlay {
             display: flex; justify-content: center; align-items: center;
             padding: 60px; background: white;
@@ -334,7 +334,7 @@
             border-top: 1px solid #e2e8f0;
         }
 
-        /* ============ Responsive ============ */
+        /* Responsive */
         @media (max-width: 768px) {
             body { padding: 16px; }
             .tabs-navigation { width: 100%; }
@@ -344,7 +344,7 @@
             .inv-chip-clear { margin-left: 0; }
         }
 
-        /* ============ Tabulator UI ============ */
+        /* Tabulator UI */
         .tabulator { border: none !important; background-color: transparent !important; }
         .tabulator .tabulator-header {
             background-color: #f8fafc !important;
@@ -359,7 +359,6 @@
         .tabulator-row.tabulator-row-even { background-color: #f8fafc !important; }
         .tabulator-row:hover { background-color: #f0fdf4 !important; cursor: pointer; }
 
-        /* Resaltado para filas con mayor Precio */
         .tabulator-row.row-top-price {
             background-color: #fef3c7 !important;
             border-left: 4px solid #f59e0b !important;
@@ -423,14 +422,12 @@
         </button>
     </div>
 
-    <!-- ============ PANEL: Inventario por Lote ============ -->
+    <!-- Panel: Inventario por Lote -->
     <div id="panel-lotes" class="tab-panel">
         <div class="table-card">
             <div class="table-header">
                 <h2><i class="fas fa-pallet" style="color: #2563eb;"></i> Detalle de Existencias por Lote</h2>
             </div>
-
-            <!-- Filter builder -->
             <div class="filter-builder">
                 <span class="filter-builder-label"><i class="fas fa-filter"></i> Filtrar:</span>
                 <select id="filterCol1"></select>
@@ -445,19 +442,18 @@
                     <i class="fas fa-eraser"></i> Limpiar todos
                 </button>
             </div>
-
             <div id="tabla1">
                 <div class="loader-overlay"><div class="loader-spinner"></div>Cargando datos del servidor...</div>
             </div>
         </div>
     </div>
 
-    <!-- ============ PANEL: Resumen General ============ -->
+    <!-- Panel: Resumen General -->
     <div id="panel-resumen" class="tab-panel hidden">
 
-        <!-- Top Inventarios -->
         <div class="top-inv-card">
-            <h3><i class="fas fa-trophy"></i> Top 5 Inventarios (por Inv Suma)</h3>
+            <h3><i class="fas fa-trophy"></i> <span id="topInvTitle">Top 5 Inventarios</span></h3>
+            <div class="top-inv-subtitle" id="topInvSubtitle">Calculando…</div>
             <div class="top-inv-list" id="topInvList">
                 <div style="color:#94a3b8; padding: 12px;">Calculando ranking…</div>
             </div>
@@ -467,8 +463,6 @@
             <div class="table-header">
                 <h2><i class="fas fa-calculator" style="color: #2563eb;"></i> Consolidado y Precios</h2>
             </div>
-
-            <!-- Filter builder -->
             <div class="filter-builder">
                 <span class="filter-builder-label"><i class="fas fa-filter"></i> Filtrar:</span>
                 <select id="filterCol2"></select>
@@ -483,22 +477,10 @@
                     <i class="fas fa-eraser"></i> Limpiar todos
                 </button>
             </div>
-
-            <!-- Selector de columnas de inventario -->
-            <div class="inv-selector">
+            <div class="inv-selector" id="invSelector">
                 <span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>
-                <button class="inv-chip" data-inv="1001">1001</button>
-                <button class="inv-chip" data-inv="1003">1003</button>
-                <button class="inv-chip" data-inv="1004">1004</button>
-                <button class="inv-chip" data-inv="1017">1017</button>
-                <button class="inv-chip" data-inv="1018">1018</button>
-                <button class="inv-chip" data-inv="1022">1022</button>
-                <button class="inv-chip" data-inv="1036">1036</button>
-                <button class="inv-chip inv-chip-clear" id="invChipClear">
-                    <i class="fas fa-eraser"></i> Limpiar
-                </button>
+                <span style="color:#94a3b8; font-size:0.85rem; font-style:italic;">Descubriendo centros…</span>
             </div>
-
             <div id="tabla2">
                 <div class="loader-overlay"><div class="loader-spinner"></div>Construyendo matriz de resumen...</div>
             </div>
@@ -513,22 +495,20 @@
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/js/tabulator.min.js"></script>
 <script>
 (function() {
-    const INV_CODES   = ['1001', '1003', '1004', '1017', '1018', '1022', '1036'];
+    "use strict";
+
     const TOP_PRECIO_N = 5;
     const TOP_INV_N    = 5;
+    const SHEET_ID     = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
 
-    function waitForTabulator(callback) {
-        if (typeof Tabulator !== 'undefined') callback();
-        else setTimeout(() => waitForTabulator(callback), 50);
-    }
+    // =====================================================================
+    // Utilidades
+    // =====================================================================
+    function $(id) { return document.getElementById(id); }
 
-    // -------- Utilidades --------
-    function toNum(val) {
-        if (val === undefined || val === null || val === '') return NaN;
-        if (typeof val === 'number') return val;
-        const cleaned = String(val).replace(',', '.').replace(/[^0-9.-]/g, '');
-        const n = parseFloat(cleaned);
-        return isNaN(n) ? NaN : n;
+    function waitForTabulator(cb) {
+        if (typeof Tabulator !== 'undefined') cb();
+        else setTimeout(() => waitForTabulator(cb), 50);
     }
 
     function escapeHtml(str) {
@@ -538,47 +518,77 @@
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Normaliza llaves: colapsa cualquier whitespace (incluye saltos de línea, tabs, NBSP) a un solo espacio
-    function normalizeKey(key) {
-        return String(key)
-            .toLowerCase()
-            .normalize("NFD")                       // Separa los acentos de las letras
-            .replace(/[\u0300-\u036f]/g, "")         // Borra los acentos completamente (á -> a)
-            .replace(/[^a-z0-9]/g, "")              // Elimina puntos, espacios, guiones, etc.
-            .trim();
+    // Parseo robusto de números/moneda (US: 1,234.56 o $1,234.56)
+    function toNum(val) {
+        if (val === undefined || val === null) return NaN;
+        if (typeof val === 'number') return isNaN(val) ? NaN : val;
+        let s = String(val).trim();
+        if (s === '' || s === '-' || s === '–' || s === '—') return NaN;
+        s = s.replace(/[$€£¥]/g, '').replace(/\s+/g, '').replace(/,/g, '');
+        const n = parseFloat(s);
+        return isNaN(n) ? NaN : n;
     }
-    function normalizeData(data) {
-        return data.map(row => {
+
+    // Normalización SUAVE: colapsa whitespace y trim. NO destruye acentos ni mayúsculas.
+    function normalizeKey(k) {
+        return String(k).replace(/\s+/g, ' ').trim();
+    }
+
+    // Normaliza la data: limpia llaves y convierte " -" en cadena vacía
+    function normalizeData(rows) {
+        if (!Array.isArray(rows)) return [];
+        return rows.map(row => {
             const out = {};
             for (const k in row) {
                 let v = row[k];
-                // Normaliza " -" o "-" rodeado de espacios → vacío
-                if (typeof v === 'string' && v.trim() === '-') v = '';
+                if (typeof v === 'string') {
+                    const t = v.trim();
+                    if (t === '-' || t === '–' || t === '—') v = '';
+                }
                 out[normalizeKey(k)] = v;
             }
             return out;
         });
     }
 
-    // -------- Constructor genérico de filtros multi-columna --------
-    function setupFilterBuilder(table, columns, els) {
-        let active = []; // [{ field, title, value }]
+    // Busca el primer key que exista en data entre varios candidatos
+    function findField(allKeys, candidates) {
+        for (const c of candidates) {
+            if (allKeys.indexOf(c) !== -1) return c;
+        }
+        // Búsqueda case-insensitive como fallback
+        const lowMap = {};
+        allKeys.forEach(k => { lowMap[k.toLowerCase()] = k; });
+        for (const c of candidates) {
+            const m = lowMap[c.toLowerCase()];
+            if (m) return m;
+        }
+        return null;
+    }
 
-        // Poblar dropdown con columnas filtrables (excluir las que no tienen field)
+    // Formateo de moneda MXN
+    const fmtMXN = new Intl.NumberFormat('es-MX', {
+        style: 'currency', currency: 'MXN', maximumFractionDigits: 2
+    });
+
+    // =====================================================================
+    // Constructor de filtros multi-columna (acumulativos, AND)
+    // =====================================================================
+    function setupFilterBuilder(table, columns, els) {
+        let active = [];
         const filterableCols = columns.filter(c => c.field && c.title);
         els.col.innerHTML = filterableCols
             .map(c => `<option value="${escapeHtml(c.field)}">${escapeHtml(c.title)}</option>`)
             .join('');
 
         function apply() {
-            if (active.length === 0) {
-                table.clearFilter();
-            } else {
-                // Array de filtros = AND
-                table.setFilter(active.map(f => ({
-                    field: f.field, type: 'like', value: f.value
-                })));
-            }
+            try {
+                if (active.length === 0) {
+                    table.clearFilter();
+                } else {
+                    table.setFilter(active.map(f => ({ field: f.field, type: 'like', value: f.value })));
+                }
+            } catch (e) { console.error('Filter apply error:', e); }
             renderChips();
         }
 
@@ -596,8 +606,7 @@
                 <div class="filter-chip">
                     <strong>${escapeHtml(f.title)}:</strong>&nbsp;${escapeHtml(f.value)}
                     <button class="filter-chip-x" data-idx="${i}" title="Quitar filtro">×</button>
-                </div>
-            `).join('');
+                </div>`).join('');
             els.chips.querySelectorAll('.filter-chip-x').forEach(btn => {
                 btn.addEventListener('click', () => {
                     active.splice(parseInt(btn.getAttribute('data-idx')), 1);
@@ -619,244 +628,336 @@
         }
 
         els.add.addEventListener('click', addFilter);
-        els.val.addEventListener('keydown', (e) => {
+        els.val.addEventListener('keydown', e => {
             if (e.key === 'Enter') { e.preventDefault(); addFilter(); }
         });
         els.clear.addEventListener('click', () => { active = []; apply(); });
-
         renderChips();
     }
 
+    // =====================================================================
+    // Descubrimiento dinámico de campos en InvConsolidado
+    // =====================================================================
+    function buildColumnsConsolidado(data) {
+        if (!data || data.length === 0) {
+            return { cols: [], invCodes: [], fields: {} };
+        }
+
+        // Recolectar TODAS las llaves que aparecen en cualquier fila (no solo la primera)
+        const keySet = new Set();
+        data.forEach(r => Object.keys(r).forEach(k => keySet.add(k)));
+        const allKeys = [...keySet];
+
+        // Descubrir códigos de inventario dinámicamente
+        const codes = new Set();
+        allKeys.forEach(k => {
+            const m = k.match(/^Inv\s+(\d{3,5})$/i);
+            if (m) codes.add(m[1]);
+        });
+        const sortedCodes = [...codes].sort();
+
+        const fields = {
+            condicion:  findField(allKeys, ['Condicion', 'Condición']),
+            material:   findField(allKeys, ['Material']),
+            textoBreve: findField(allKeys, ['Texto breve de material', 'Texto Breve de Material', 'Descripción']),
+            disp1030:   findField(allKeys, ['Disponible 1031-1030']),
+            disp1032:   findField(allKeys, ['Disponible 1031-1032']),
+            invSuma:    findField(allKeys, ['Inv Suma', 'Total Inv', 'Suma Inv']),
+            precio:     findField(allKeys, ['Precio', 'Precio Unitario']),
+            importe:    findField(allKeys, ['Importe Inventario $', 'Importe Inventario', 'Importe Inv $', 'Importe Inv', 'Valor Inventario'])
+        };
+
+        const cols = [];
+        if (fields.condicion)  cols.push({ title: 'Condicion',                field: fields.condicion,  minWidth: 110 });
+        if (fields.material)   cols.push({ title: 'Material',                 field: fields.material,   minWidth: 110 });
+        if (fields.textoBreve) cols.push({ title: 'Texto breve de material',  field: fields.textoBreve, minWidth: 240 });
+        if (fields.disp1030)   cols.push({ title: 'Disponible 1031-1030',     field: fields.disp1030,   minWidth: 130, hozAlign: 'right' });
+        if (fields.disp1032)   cols.push({ title: 'Disponible 1031-1032',     field: fields.disp1032,   minWidth: 130, hozAlign: 'right' });
+
+        sortedCodes.forEach(code => {
+            const invKey = findField(allKeys, [`Inv ${code}`]);
+            const traKey = findField(allKeys, [
+                `Cant. en Tránsito Inv ${code}`,
+                `Cant en Tránsito Inv ${code}`,
+                `Cantidad en Tránsito Inv ${code}`,
+                `Cant. en Transito Inv ${code}`
+            ]);
+            if (invKey) cols.push({ title: `Inv ${code}`,                   field: invKey, minWidth: 90,  hozAlign: 'right', visible: false });
+            if (traKey) cols.push({ title: `Cant. en Tránsito Inv ${code}`, field: traKey, minWidth: 160, hozAlign: 'right', visible: false });
+        });
+
+        if (fields.invSuma) cols.push({ title: 'Inv Suma',            field: fields.invSuma, minWidth: 100, hozAlign: 'right' });
+        if (fields.precio)  cols.push({ title: 'Precio',              field: fields.precio,  minWidth: 110, hozAlign: 'right' });
+        if (fields.importe) cols.push({ title: 'Importe Inventario $', field: fields.importe, minWidth: 150, hozAlign: 'right' });
+
+        return { cols, invCodes: sortedCodes, fields };
+    }
+
+    function buildColumnsDetalle(data) {
+        if (!data || data.length === 0) return [];
+        const keySet = new Set();
+        data.forEach(r => Object.keys(r).forEach(k => keySet.add(k)));
+        const allKeys = [...keySet];
+
+        const def = [
+            { title: 'Material',                candidates: ['Material'],                                            minWidth: 110 },
+            { title: 'Texto breve de material', candidates: ['Texto breve de material', 'Texto Breve de Material'],  minWidth: 240 },
+            { title: 'Centro',                  candidates: ['Centro'],                                              minWidth: 90  },
+            { title: 'Almacén',                 candidates: ['Almacén', 'Almacen'],                                  minWidth: 100 },
+            { title: 'Lote',                    candidates: ['Lote'],                                                minWidth: 130 },
+            { title: 'FechaCaducidad',          candidates: ['FechaCaducidad', 'Fecha Caducidad', 'Fecha de Caducidad'], minWidth: 130 },
+            { title: 'CantidadDisp',            candidates: ['CantidadDisp', 'Cantidad Disp', 'Cantidad Disponible'], minWidth: 110, hozAlign: 'right' },
+            { title: 'Precio oferta',           candidates: ['Precio oferta', 'Precio Oferta', 'Precio'],            minWidth: 110, hozAlign: 'right' }
+        ];
+
+        const cols = [];
+        def.forEach(d => {
+            const f = findField(allKeys, d.candidates);
+            if (f) cols.push({ title: d.title, field: f, minWidth: d.minWidth, hozAlign: d.hozAlign });
+        });
+        return cols;
+    }
+
+    // =====================================================================
+    // Render chips dinámicos de inventario
+    // =====================================================================
+    function renderInvSelector(invCodes, t2, fieldByCode) {
+        const container = $('invSelector');
+        const labelHtml = `<span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>`;
+        const chipsHtml = invCodes.map(code =>
+            `<button class="inv-chip" data-inv="${escapeHtml(code)}">${escapeHtml(code)}</button>`
+        ).join('');
+        const clearHtml = `<button class="inv-chip inv-chip-clear" id="invChipClear"><i class="fas fa-eraser"></i> Limpiar</button>`;
+        container.innerHTML = labelHtml + chipsHtml + clearHtml;
+
+        container.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const code = chip.getAttribute('data-inv');
+                const isActive = chip.classList.toggle('active');
+                const colInv = t2.getColumn(fieldByCode.inv[code]);
+                const colTra = t2.getColumn(fieldByCode.tra[code]);
+                if (isActive) {
+                    if (colInv) colInv.show();
+                    if (colTra) colTra.show();
+                } else {
+                    if (colInv) colInv.hide();
+                    if (colTra) colTra.hide();
+                }
+            });
+        });
+        $('invChipClear').addEventListener('click', () => {
+            container.querySelectorAll('.inv-chip[data-inv]').forEach(c => {
+                c.classList.remove('active');
+                const code = c.getAttribute('data-inv');
+                const colInv = t2.getColumn(fieldByCode.inv[code]);
+                const colTra = t2.getColumn(fieldByCode.tra[code]);
+                if (colInv) colInv.hide();
+                if (colTra) colTra.hide();
+            });
+        });
+    }
+
+    // =====================================================================
+    // Top 5 inventarios por Importe Inventario $
+    // =====================================================================
+    function renderTopInventarios(data, fields) {
+        const titleEl    = $('topInvTitle');
+        const subtitleEl = $('topInvSubtitle');
+        const listEl     = $('topInvList');
+
+        // Elegir métrica: prefiere Importe Inventario $, fallback a Inv Suma
+        let metricField = fields.importe;
+        let metricLabel = 'Importe Inventario $';
+        let isCurrency = true;
+        if (!metricField) {
+            metricField = fields.invSuma;
+            metricLabel = 'Inv Suma';
+            isCurrency = false;
+        }
+        if (!metricField) {
+            titleEl.textContent = 'Top 5 Inventarios';
+            subtitleEl.textContent = 'No se encontró ninguna métrica válida en los datos';
+            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Esperando columnas "Importe Inventario $" o "Inv Suma"</div>';
+            return;
+        }
+
+        titleEl.textContent = `Top 5 Inventarios (por ${metricLabel})`;
+        subtitleEl.textContent = `Ranking dinámico calculado sobre ${data.length.toLocaleString('es-MX')} registros`;
+
+        const matField  = fields.material  || 'Material';
+        const descField = fields.textoBreve || 'Texto breve de material';
+
+        const ranked = data
+            .map(r => ({ row: r, val: toNum(r[metricField]) }))
+            .filter(x => !isNaN(x.val) && x.val > 0)
+            .sort((a, b) => b.val - a.val)
+            .slice(0, TOP_INV_N);
+
+        if (ranked.length === 0) {
+            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Sin datos numéricos suficientes para el ranking</div>';
+            return;
+        }
+
+        listEl.innerHTML = ranked.map((item, i) => {
+            const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+            const valShown = isCurrency
+                ? fmtMXN.format(item.val)
+                : item.val.toLocaleString('es-MX', { maximumFractionDigits: 0 });
+            return `
+                <div class="top-inv-item">
+                    <div class="top-inv-rank ${rankClass}">${i + 1}</div>
+                    <div class="top-inv-info">
+                        <div class="top-inv-mat">${escapeHtml(item.row[matField])}</div>
+                        <div class="top-inv-desc">${escapeHtml(item.row[descField])}</div>
+                    </div>
+                    <div class="top-inv-qty">
+                        ${valShown}
+                        <small>${escapeHtml(metricLabel)}</small>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    // =====================================================================
+    // Inicialización principal
+    // =====================================================================
     function initApp() {
-        const SHEET_ID = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
         const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent("InvDetalle")}`;
         const url2 = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent("InvConsolidado")}`;
 
         let t1 = null, t2 = null;
         let topPrecioThreshold = Infinity;
 
-        const $ = (id) => document.getElementById(id);
-        const totalRegistros   = $("totalRegistros");
-        const materialesUnicos = $("materialesUnicos");
-        const totalUnidades    = $("totalUnidades");
-        const lastUpdate       = $("lastUpdateTime");
-
         function updateTimestamp() {
             const now = new Date();
-            lastUpdate.innerText =
+            $("lastUpdateTime").textContent =
                 `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} hrs`;
         }
 
-        function calcularTotalUnidades(data) {
-            let total = 0;
-            for (const row of data) {
-                const n = toNum(row.CantidadDisp);
-                if (!isNaN(n)) total += n;
-            }
-            return total.toLocaleString('es-ES', { maximumFractionDigits: 0 });
-        }
-
-        function renderTopInventarios(data) {
-            const ranked = data
-                .map(r => ({ row: r, suma: toNum(r["Inv Suma"]) }))
-                .filter(x => !isNaN(x.suma) && x.suma > 0)
-                .sort((a, b) => b.suma - a.suma)
-                .slice(0, TOP_INV_N);
-
-            const container = $("topInvList");
-            if (ranked.length === 0) {
-                container.innerHTML = '<div style="color:#94a3b8; padding:12px;">Sin datos suficientes para el ranking</div>';
-                return;
-            }
-
-            container.innerHTML = ranked.map((item, i) => {
-                const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-                return `
-                    <div class="top-inv-item">
-                        <div class="top-inv-rank ${rankClass}">${i + 1}</div>
-                        <div class="top-inv-info">
-                            <div class="top-inv-mat">${escapeHtml(item.row.Material)}</div>
-                            <div class="top-inv-desc">${escapeHtml(item.row["Texto breve de material"])}</div>
-                        </div>
-                        <div class="top-inv-qty">
-                            ${item.suma.toLocaleString('es-ES', { maximumFractionDigits: 0 })}
-                            <small>Inv Suma</small>
-                        </div>
-                    </div>`;
-            }).join('');
-        }
-
-        function calcularPrecioThreshold(data) {
-            const precios = data
-                .map(r => toNum(r.Precio))
-                .filter(p => !isNaN(p) && p > 0)
-                .sort((a, b) => b - a);
-            if (precios.length === 0) return Infinity;
-            const idx = Math.min(TOP_PRECIO_N - 1, precios.length - 1);
-            return precios[idx];
-        }
-
-        // ============ TABLA 1: InvDetalle ============
+        // ====== TABLA 1: InvDetalle ======
         fetch(url1)
             .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
             .then(rawData => {
-                const data = normalizeData(rawData);
+                try {
+                    const data = normalizeData(rawData);
+                    console.log(`[InvDetalle] ${data.length} registros · llaves:`, data[0] ? Object.keys(data[0]) : []);
 
-                totalRegistros.innerText = data.length.toLocaleString();
-                const matsUnicos = new Set(data.map(x => x.Material).filter(m => m && String(m).trim() !== ""));
-                materialesUnicos.innerText = matsUnicos.size.toLocaleString();
-                totalUnidades.innerText = calcularTotalUnidades(data);
-                updateTimestamp();
+                    $("totalRegistros").textContent = data.length.toLocaleString('es-MX');
+                    const matsUnicos = new Set(data.map(x => x.Material).filter(m => m && String(m).trim() !== ""));
+                    $("materialesUnicos").textContent = matsUnicos.size.toLocaleString('es-MX');
 
-                const cols1 = [
-                    { title: "Material",                field: "Material",                minWidth: 110 },
-                    { title: "Texto breve de material", field: "Texto breve de material", minWidth: 240 },
-                    { title: "Centro",                  field: "Centro",                  minWidth: 90  },
-                    { title: "Almacén",                 field: "Almacén",                 minWidth: 100 },
-                    { title: "Lote",                    field: "Lote",                    minWidth: 130 },
-                    { title: "FechaCaducidad",          field: "FechaCaducidad",          minWidth: 130 },
-                    { title: "CantidadDisp",            field: "CantidadDisp",            minWidth: 110, hozAlign: "right" },
-                    { title: "Precio oferta",           field: "Precio oferta",           minWidth: 110, hozAlign: "right" }
-                ];
+                    let totalUnidades = 0;
+                    data.forEach(r => {
+                        const n = toNum(r.CantidadDisp);
+                        if (!isNaN(n)) totalUnidades += n;
+                    });
+                    $("totalUnidades").textContent = totalUnidades.toLocaleString('es-MX', { maximumFractionDigits: 0 });
+                    updateTimestamp();
 
-                t1 = new Tabulator("#tabla1", {
-                    data,
-                    layout: "fitDataStretch",
-                    pagination: "local",
-                    paginationSize: 15,
-                    paginationSizeSelector: [15, 30, 50, 100],
-                    placeholder: "No se encontraron registros de lotes disponibles",
-                    columns: cols1
-                });
+                    const cols1 = buildColumnsDetalle(data);
 
-                setupFilterBuilder(t1, cols1, {
-                    col:   $("filterCol1"),
-                    val:   $("filterVal1"),
-                    add:   $("filterAdd1"),
-                    chips: $("filterChips1"),
-                    clear: $("filterClear1")
-                });
+                    t1 = new Tabulator("#tabla1", {
+                        data,
+                        layout: "fitDataStretch",
+                        pagination: "local",
+                        paginationSize: 15,
+                        paginationSizeSelector: [15, 30, 50, 100],
+                        placeholder: "No se encontraron registros de lotes disponibles",
+                        columns: cols1
+                    });
+
+                    setupFilterBuilder(t1, cols1, {
+                        col: $("filterCol1"), val: $("filterVal1"), add: $("filterAdd1"),
+                        chips: $("filterChips1"), clear: $("filterClear1")
+                    });
+                } catch (e) {
+                    console.error('Error procesando InvDetalle:', e);
+                    $("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error procesando datos: ${escapeHtml(e.message)}</div>`;
+                }
             })
             .catch(err => {
-                console.error(err);
-                $("tabla1").innerHTML =
-                    `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvDetalle: ${err.message}</div>`;
+                console.error('Fetch InvDetalle:', err);
+                $("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvDetalle: ${escapeHtml(err.message)}</div>`;
             });
 
-        // ============ TABLA 2: InvConsolidado ============
+        // ====== TABLA 2: InvConsolidado ======
         fetch(url2)
             .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
             .then(rawData => {
-                const data = normalizeData(rawData);
+                try {
+                    const data = normalizeData(rawData);
+                    console.log(`[InvConsolidado] ${data.length} registros · llaves:`, data[0] ? Object.keys(data[0]) : []);
 
-                renderTopInventarios(data);
-                topPrecioThreshold = calcularPrecioThreshold(data);
+                    const { cols: cols2, invCodes, fields } = buildColumnsConsolidado(data);
+                    console.log('[InvConsolidado] Centros detectados:', invCodes);
+                    console.log('[InvConsolidado] Campos clave:', fields);
 
-                const colsFijasInicio = [
-                    { title: "Condicion",                field: "Condicion",                minWidth: 110 },
-                    { title: "Material",                 field: "Material",                 minWidth: 110 },
-                    { title: "Texto breve de material",  field: "Texto breve de material",  minWidth: 240 },
-                    { title: "Disponible 1031-1030",     field: "Disponible 1031-1030",     minWidth: 130, hozAlign: "right" },
-                    { title: "Disponible 1031-1032",     field: "Disponible 1031-1032",     minWidth: 130, hozAlign: "right" }
-                ];
-                const colsInventarios = INV_CODES.flatMap(code => ([
-                    { 
-                        title: `Inv ${code}`, 
-                        field: normalizeKey(`Inv ${code}`), // <-- Ahora usa la función estricta
-                        minWidth: 90, 
-                        hozAlign: "right", 
-                        visible: false 
-                    },
-                    { 
-                        title: `Cant. en Tránsito Inv ${code}`, 
-                        field: normalizeKey(`Cant. en Tránsito Inv ${code}`), // <-- Ahora usa la función estricta
-                        minWidth: 160, 
-                        hozAlign: "right", 
-                        visible: false 
-                    }
-                ]));
-                const colsFijasFin = [
-                    { title: "Inv Suma", field: "Inv Suma", minWidth: 100, hozAlign: "right" },
-                    { title: "Precio",   field: "Precio",   minWidth: 100, hozAlign: "right" }
-                ];
-                const cols2 = [...colsFijasInicio, ...colsInventarios, ...colsFijasFin];
+                    // Ranking
+                    renderTopInventarios(data, fields);
 
-                t2 = new Tabulator("#tabla2", {
-                    data,
-                    layout: "fitDataStretch",
-                    pagination: "local",
-                    paginationSize: 15,
-                    paginationSizeSelector: [15, 30, 50, 100],
-                    placeholder: "No hay registros consolidados",
-                    columns: cols2,
-                    rowFormatter: function(row) {
-                        const d = row.getData();
-                        const precio = toNum(d.Precio);
-                        const el = row.getElement();
-                        if (!isNaN(precio) && precio > 0 && precio >= topPrecioThreshold) {
-                            el.classList.add('row-top-price');
-                        } else {
-                            el.classList.remove('row-top-price');
+                    // Threshold de Precio para resaltado
+                    if (fields.precio) {
+                        const precios = data
+                            .map(r => toNum(r[fields.precio]))
+                            .filter(p => !isNaN(p) && p > 0)
+                            .sort((a, b) => b - a);
+                        if (precios.length > 0) {
+                            const idx = Math.min(TOP_PRECIO_N - 1, precios.length - 1);
+                            topPrecioThreshold = precios[idx];
+                            console.log(`[InvConsolidado] Threshold de Precio (top ${TOP_PRECIO_N}):`, topPrecioThreshold);
                         }
                     }
-                });
 
-                setupFilterBuilder(t2, cols2, {
-                    col:   $("filterCol2"),
-                    val:   $("filterVal2"),
-                    add:   $("filterAdd2"),
-                    chips: $("filterChips2"),
-                    clear: $("filterClear2")
-                });
-
-                // Chips de inventario: alternan visibilidad de columnas Inv X y Cant. en Tránsito X
-                document.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
-                    // Dentro del document.querySelectorAll('.inv-chip[data-inv]').forEach...
-                    chip.addEventListener('click', () => {
-                        const code = chip.getAttribute('data-inv');
-                        const isActive = chip.classList.toggle('active');
-                        
-                        // Pasamos el código por normalizeKey para encontrar la columna correcta
-                        const colInv = t2.getColumn(normalizeKey(`Inv ${code}`));
-                        const colTra = t2.getColumn(normalizeKey(`Cant. en Tránsito Inv ${code}`));
-                        
-                        if (isActive) {
-                            if (colInv) colInv.show();
-                            if (colTra) colTra.show();
-                        } else {
-                            if (colInv) colInv.hide();
-                            if (colTra) colTra.hide();
+                    t2 = new Tabulator("#tabla2", {
+                        data,
+                        layout: "fitDataStretch",
+                        pagination: "local",
+                        paginationSize: 15,
+                        paginationSizeSelector: [15, 30, 50, 100],
+                        placeholder: "No hay registros consolidados",
+                        columns: cols2,
+                        rowFormatter: function(row) {
+                            const d = row.getData();
+                            const precio = fields.precio ? toNum(d[fields.precio]) : NaN;
+                            const el = row.getElement();
+                            if (!isNaN(precio) && precio > 0 && precio >= topPrecioThreshold) {
+                                el.classList.add('row-top-price');
+                            } else {
+                                el.classList.remove('row-top-price');
+                            }
                         }
                     });
-                });
 
-                $("invChipClear").addEventListener('click', () => {
-                    document.querySelectorAll('.inv-chip[data-inv]').forEach(c => {
-                        c.classList.remove('active');
-                        const code = c.getAttribute('data-inv');
-                        
-                        // También aquí usamos normalizeKey
-                        const colInv = t2.getColumn(normalizeKey(`Inv ${code}`));
-                        const colTra = t2.getColumn(normalizeKey(`Cant. en Tránsito Inv ${code}`));
-                        
-                        if (colInv) colInv.hide();
-                        if (colTra) colTra.hide();
+                    setupFilterBuilder(t2, cols2, {
+                        col: $("filterCol2"), val: $("filterVal2"), add: $("filterAdd2"),
+                        chips: $("filterChips2"), clear: $("filterClear2")
                     });
-                });
+
+                    // Construir mapas code→field para los chips
+                    const fieldByCode = { inv: {}, tra: {} };
+                    invCodes.forEach(code => {
+                        const colInv = cols2.find(c => c.title === `Inv ${code}`);
+                        const colTra = cols2.find(c => c.title === `Cant. en Tránsito Inv ${code}`);
+                        if (colInv) fieldByCode.inv[code] = colInv.field;
+                        if (colTra) fieldByCode.tra[code] = colTra.field;
+                    });
+
+                    renderInvSelector(invCodes, t2, fieldByCode);
+                } catch (e) {
+                    console.error('Error procesando InvConsolidado:', e);
+                    $("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error procesando datos: ${escapeHtml(e.message)}</div>`;
+                }
             })
             .catch(err => {
-                console.error(err);
-                $("tabla2").innerHTML =
-                    `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvConsolidado: ${err.message}</div>`;
+                console.error('Fetch InvConsolidado:', err);
+                $("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvConsolidado: ${escapeHtml(err.message)}</div>`;
             });
 
-        // ============ Tabs ============
-        const botones = document.querySelectorAll('.tab-btn');
-        const paneles = document.querySelectorAll('.tab-panel');
-        botones.forEach(btn => {
+        // ====== Tabs ======
+        document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                botones.forEach(b => b.classList.remove('active'));
-                paneles.forEach(p => p.classList.add('hidden'));
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
                 btn.classList.add('active');
                 const panelId = btn.getAttribute('data-panel');
                 $(panelId).classList.remove('hidden');
@@ -865,12 +966,18 @@
             });
         });
 
-        // Auto-refresh cada 5 min y manual al click en badge
         setInterval(() => window.location.reload(), 300000);
         $("lastUpdateBadge").onclick = () => window.location.reload();
     }
 
-    waitForTabulator(initApp);
+    waitForTabulator(() => {
+        try { initApp(); }
+        catch (e) {
+            console.error('Error fatal:', e);
+            document.body.insertAdjacentHTML('beforeend',
+                `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error fatal: ${escapeHtml(e.message)}</div>`);
+        }
+    });
 })();
 </script>
 </body>
