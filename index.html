@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Inventario DEGASA · Dashboard</title>
+    <title>Inventario DEGASA · Dashboard Integrado</title>
 
     <link href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/css/tabulator.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -249,6 +249,35 @@
         .filter-clear-all:hover { color: #ef4444; border-color: #fca5a5; background: #fef2f2; }
         .filter-clear-all.hidden { display: none; }
 
+        /* Global Search Style */
+        .global-search {
+            padding: 14px 24px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .global-search i {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .global-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            max-width: 400px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.15s;
+        }
+        .global-search input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
         /* Inventory Column Selector */
         .inv-selector {
             padding: 14px 24px;
@@ -334,6 +363,68 @@
             border-top: 1px solid #e2e8f0;
         }
 
+        /* Clickable Cells & Modal Styles */
+        .clickable-cell {
+            cursor: pointer;
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            display: inline;
+        }
+        .clickable-cell:hover {
+            background-color: #dbeafe;
+        }
+
+        /* Modal Layout */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 1100px;
+            max-height: 85vh;
+            overflow: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+        }
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .close-modal {
+            font-size: 1.8rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #64748b;
+            transition: color 0.15s;
+        }
+        .close-modal:hover {
+            color: #ef4444;
+        }
+        .modal-body { padding: 24px; }
+
         /* Responsive */
         @media (max-width: 768px) {
             body { padding: 16px; }
@@ -344,7 +435,7 @@
             .inv-chip-clear { margin-left: 0; }
         }
 
-        /* Tabulator UI */
+        /* Tabulator Custom UI */
         .tabulator { border: none !important; background-color: transparent !important; }
         .tabulator .tabulator-header {
             background-color: #f8fafc !important;
@@ -357,7 +448,20 @@
         }
         .tabulator-row { border-bottom: 1px solid #f1f5f9 !important; }
         .tabulator-row.tabulator-row-even { background-color: #f8fafc !important; }
-        .tabulator-row:hover { background-color: #f0fdf4 !important; cursor: pointer; }
+        .tabulator-row:hover { background-color: #f0fdf4 !important; }
+
+        /* Forzar filas compactas y altura uniforme */
+        .tabulator .tabulator-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+            height: auto !important;
+        }
+        .tabulator .tabulator-row {
+            min-height: 0 !important;
+        }
 
         .tabulator-row.row-top-price {
             background-color: #fef3c7 !important;
@@ -367,9 +471,7 @@
             background-color: #fde68a !important;
         }
 
-        /* =========================================================
-        Toolbar tablas
-        ========================================================= */
+        /* Toolbars */
         .table-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -379,13 +481,11 @@
             background: #ffffff;
             border-bottom: 1px solid #e2e8f0;
         }
-
         .toolbar-group {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .toolbar-btn {
             border: 1px solid #cbd5e1;
             background: white;
@@ -401,28 +501,22 @@
             align-items: center;
             gap: 6px;
         }
-
         .toolbar-btn:hover {
             background: #f8fafc;
             border-color: #94a3b8;
         }
-
         .zoom-label {
             font-size: 0.85rem;
             font-weight: 600;
             color: #475569;
         }
-
         .zoom-range {
             width: 140px;
         }
-
-        /* Zoom visual */
         .zoom-wrapper {
             transition: all 0.2s ease;
             transform-origin: top left;
         }
-
     </style>
 </head>
 <body>
@@ -431,7 +525,7 @@
     <div class="page-header">
         <div class="title-section">
             <h1><i class="fas fa-boxes-stacked"></i> Portal Inventario DEGASA</h1>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Control y visualización de materiales en tiempo real</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 4px;">Control de materiales en tiempo real · Haz clic en las cantidades para ver lotes por centro</p>
         </div>
         <div class="badge-update" id="lastUpdateBadge" title="Click para recargar manualmente">
             <i class="fas fa-arrows-rotate"></i> Actualizado: <span id="lastUpdateTime">Cargando...</span>
@@ -471,15 +565,82 @@
     </div>
 
     <div class="tabs-navigation">
-        <button class="tab-btn active" data-panel="panel-lotes">
-            <i class="fas fa-clipboard-list"></i> Inventario por Lote
-        </button>
         <button class="tab-btn" data-panel="panel-resumen">
             <i class="fas fa-chart-pie"></i> Resumen General
         </button>
+        <button class="tab-btn active" data-panel="panel-lotes">
+            <i class="fas fa-clipboard-list"></i> Inventario por Lote
+        </button>
     </div>
 
-    <!-- Panel: Inventario por Lote -->
+    <div id="panel-resumen" class="tab-panel hidden">
+
+        <div class="top-inv-card">
+            <h3><i class="fas fa-trophy"></i> <span id="topInvTitle">Top 5 Inventarios</span></h3>
+            <div class="top-inv-subtitle" id="topInvSubtitle">Calculando…</div>
+            <div class="top-inv-list" id="topInvList">
+                <div style="color:#94a3b8; padding: 12px;">Calculando ranking…</div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header">
+                <h2><i class="fas fa-calculator" style="color: #2563eb;"></i> Consolidado y Precios</h2>
+            </div>
+            
+            <div class="global-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="globalSearchCons" placeholder="Buscar en Material o Texto breve (ej: GASA, promoción, etc.)">
+            </div>
+
+            <div class="filter-builder">
+                <span class="filter-builder-label"><i class="fas fa-filter"></i> Filtrar:</span>
+                <select id="filterCol2"></select>
+                <input type="text" id="filterVal2" placeholder="Valor a buscar (Enter para agregar)...">
+                <button class="filter-add-btn" id="filterAdd2">
+                    <i class="fas fa-plus"></i> Agregar filtro
+                </button>
+                <button id="toggleExtraCols" class="toolbar-btn" style="margin-left: auto; background: #f1f5f9; border-color: #cbd5e1;">
+                    <i class="fas fa-eye-slash"></i> Mostrar Grupo/Sector
+                </button>
+            </div>
+            <div class="filter-row">
+                <div class="filter-chips-active" id="filterChips2"></div>
+                <button class="filter-clear-all hidden" id="filterClear2">
+                    <i class="fas fa-eraser"></i> Limpiar todos
+                </button>
+            </div>
+            <div class="inv-selector" id="invSelector">
+                <span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>
+                <span style="color:#94a3b8; font-size:0.85rem; font-style:italic;">Descubriendo centros…</span>
+            </div>
+            <div class="table-toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" id="exportExcel2">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="toolbar-btn" id="exportCSV2">
+                        <i class="fas fa-file-csv"></i> CSV
+                    </button>
+                </div>
+                <div class="toolbar-group" style="margin-left:auto;">
+                    <span class="zoom-label">Zoom:</span>
+                    <input type="range" min="70" max="150" value="100" class="zoom-range" id="zoom2">
+                    <span id="zoomValue2">100%</span>
+                </div>
+            </div>
+
+            <div class="zoom-wrapper" id="zoomWrap2">
+                <div id="tabla2">
+                    <div class="loader-overlay">
+                        <div class="loader-spinner"></div>
+                        Construyendo matriz de resumen...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="panel-lotes" class="tab-panel">
         <div class="table-card">
             <div class="table-header">
@@ -500,134 +661,28 @@
                 </button>
             </div>
             <div class="table-toolbar">
-
                 <div class="toolbar-group">
-
                     <button class="toolbar-btn" id="exportExcel1">
-                        <i class="fas fa-file-excel"></i>
-                        Excel
+                        <i class="fas fa-file-excel"></i> Excel
                     </button>
-
                     <button class="toolbar-btn" id="exportCSV1">
-                        <i class="fas fa-file-csv"></i>
-                        CSV
+                        <i class="fas fa-file-csv"></i> CSV
                     </button>
-
                 </div>
-
                 <div class="toolbar-group" style="margin-left:auto;">
-
                     <span class="zoom-label">Zoom:</span>
-
-                    <input
-                        type="range"
-                        min="70"
-                        max="150"
-                        value="100"
-                        class="zoom-range"
-                        id="zoom1"
-                    >
-
+                    <input type="range" min="70" max="150" value="100" class="zoom-range" id="zoom1">
                     <span id="zoomValue1">100%</span>
-
                 </div>
-
             </div>
 
             <div class="zoom-wrapper" id="zoomWrap1">
-
                 <div id="tabla1">
-
                     <div class="loader-overlay">
                         <div class="loader-spinner"></div>
                         Cargando datos del servidor...
                     </div>
-
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Panel: Resumen General -->
-    <div id="panel-resumen" class="tab-panel hidden">
-
-        <div class="top-inv-card">
-            <h3><i class="fas fa-trophy"></i> <span id="topInvTitle">Top 5 Inventarios</span></h3>
-            <div class="top-inv-subtitle" id="topInvSubtitle">Calculando…</div>
-            <div class="top-inv-list" id="topInvList">
-                <div style="color:#94a3b8; padding: 12px;">Calculando ranking…</div>
-            </div>
-        </div>
-
-        <div class="table-card">
-            <div class="table-header">
-                <h2><i class="fas fa-calculator" style="color: #2563eb;"></i> Consolidado y Precios</h2>
-            </div>
-            <div class="filter-builder">
-                <span class="filter-builder-label"><i class="fas fa-filter"></i> Filtrar:</span>
-                <select id="filterCol2"></select>
-                <input type="text" id="filterVal2" placeholder="Valor a buscar (Enter para agregar)...">
-                <button class="filter-add-btn" id="filterAdd2">
-                    <i class="fas fa-plus"></i> Agregar filtro
-                </button>
-            </div>
-            <div class="filter-row">
-                <div class="filter-chips-active" id="filterChips2"></div>
-                <button class="filter-clear-all hidden" id="filterClear2">
-                    <i class="fas fa-eraser"></i> Limpiar todos
-                </button>
-            </div>
-            <div class="inv-selector" id="invSelector">
-                <span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>
-                <span style="color:#94a3b8; font-size:0.85rem; font-style:italic;">Descubriendo centros…</span>
-            </div>
-            <div class="table-toolbar">
-
-                <div class="toolbar-group">
-
-                    <button class="toolbar-btn" id="exportExcel2">
-                        <i class="fas fa-file-excel"></i>
-                        Excel
-                    </button>
-
-                    <button class="toolbar-btn" id="exportCSV2">
-                        <i class="fas fa-file-csv"></i>
-                        CSV
-                    </button>
-
-                </div>
-
-                <div class="toolbar-group" style="margin-left:auto;">
-
-                    <span class="zoom-label">Zoom:</span>
-
-                    <input
-                        type="range"
-                        min="70"
-                        max="150"
-                        value="100"
-                        class="zoom-range"
-                        id="zoom2"
-                    >
-
-                    <span id="zoomValue2">100%</span>
-
-                </div>
-
-            </div>
-
-            <div class="zoom-wrapper" id="zoomWrap2">
-
-                <div id="tabla2">
-
-                    <div class="loader-overlay">
-                        <div class="loader-spinner"></div>
-                        Construyendo matriz de resumen...
-                    </div>
-
-                </div>
-
             </div>
         </div>
     </div>
@@ -637,6 +692,19 @@
     </div>
 </div>
 
+<div id="loteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Lotes disponibles</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="modalTabla" style="min-height: 300px;"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/js/tabulator.min.js"></script>
 <script>
 (function() {
@@ -645,6 +713,8 @@
     const TOP_PRECIO_N = 5;
     const TOP_INV_N    = 5;
     const SHEET_ID     = "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4";
+
+    let rawDetalleData = []; // Caché global de lotes para las consultas del modal
 
     // =====================================================================
     // Utilidades
@@ -663,7 +733,6 @@
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Parseo robusto de números/moneda (US: 1,234.56 o $1,234.56)
     function toNum(val) {
         if (val === undefined || val === null) return NaN;
         if (typeof val === 'number') return isNaN(val) ? NaN : val;
@@ -674,38 +743,29 @@
         return isNaN(n) ? NaN : n;
     }
 
-    // Normalización SUAVE: colapsa whitespace y trim. NO destruye acentos ni mayúsculas.
     function normalizeKey(k) {
         return String(k).replace(/\s+/g, ' ').trim();
     }
 
-    // Normaliza la data: limpia llaves y convierte " -" en cadena vacía
     function normalizeData(rows) {
         if (!Array.isArray(rows)) return [];
-
         return rows.map(row => {
             const out = {};
-
             for (const k in row) {
                 let v = row[k];
-
-                // SOLO limpiar espacios
                 if (typeof v === 'string') {
                     v = v.trim();
                 }
-
                 out[normalizeKey(k)] = v;
             }
-
             return out;
         });
     }
-    // Busca el primer key que exista en data entre varios candidatos
+
     function findField(allKeys, candidates) {
         for (const c of candidates) {
             if (allKeys.indexOf(c) !== -1) return c;
         }
-        // Búsqueda case-insensitive como fallback
         const lowMap = {};
         allKeys.forEach(k => { lowMap[k.toLowerCase()] = k; });
         for (const c of candidates) {
@@ -715,29 +775,22 @@
         return null;
     }
 
-    // Formateo de moneda MXN
     const fmtMXN = new Intl.NumberFormat('es-MX', {
         style: 'currency', currency: 'MXN', maximumFractionDigits: 2
     });
 
     // =====================================================================
-    // Constructor de filtros multi-columna (con AUTOCOMPLETE)
+    // Constructor de filtros multi-columna con Autocomplete
     // =====================================================================
     function setupFilterBuilder(table, columns, els) {
-
         let active = [];
-
         const filterableCols = columns.filter(c => c.field && c.title);
 
         els.col.innerHTML = filterableCols
             .map(c => `<option value="${escapeHtml(c.field)}">${escapeHtml(c.title)}</option>`)
             .join('');
 
-        // =========================================================
-        // CREAR AUTOCOMPLETE
-        // =========================================================
         const autoWrap = document.createElement("div");
-
         autoWrap.style.position = "relative";
         autoWrap.style.flex = "1";
         autoWrap.style.minWidth = "220px";
@@ -745,11 +798,9 @@
 
         els.val.parentNode.insertBefore(autoWrap, els.val);
         autoWrap.appendChild(els.val);
-
         els.val.style.width = "100%";
 
         const suggestionBox = document.createElement("div");
-
         suggestionBox.style.position = "absolute";
         suggestionBox.style.top = "100%";
         suggestionBox.style.left = "0";
@@ -763,54 +814,27 @@
         suggestionBox.style.zIndex = "999";
         suggestionBox.style.display = "none";
         suggestionBox.style.boxShadow = "0 10px 15px rgba(0,0,0,0.08)";
-
         autoWrap.appendChild(suggestionBox);
 
-        // =========================================================
-        // OBTENER VALORES UNICOS DE LA COLUMNA
-        // =========================================================
         function getUniqueValues(field) {
-
             const values = new Set();
-
             table.getData().forEach(r => {
-
                 let v = r[field];
-
                 if (v === undefined || v === null) return;
-
                 v = String(v).trim();
-
-                if (v !== "") {
-                    values.add(v);
-                }
-
+                if (v !== "") values.add(v);
             });
-
             return [...values].sort((a, b) => a.localeCompare(b, 'es'));
         }
 
-        // =========================================================
-        // MOSTRAR SUGERENCIAS
-        // =========================================================
         function renderSuggestions() {
-
             const field = els.col.value;
-
-            const search = els.val.value
-                .trim()
-                .toLowerCase();
-
+            const search = els.val.value.trim().toLowerCase();
             const values = getUniqueValues(field);
-
             let filtered = values;
 
             if (search !== "") {
-
-                filtered = values.filter(v =>
-                    v.toLowerCase().includes(search)
-                );
-
+                filtered = values.filter(v => v.toLowerCase().includes(search));
             }
 
             filtered = filtered.slice(0, 50);
@@ -822,12 +846,7 @@
 
             suggestionBox.innerHTML = filtered.map(v => `
                 <div class="autocomplete-item"
-                    style="
-                        padding:10px 12px;
-                        cursor:pointer;
-                        border-bottom:1px solid #f1f5f9;
-                        font-size:0.85rem;
-                    "
+                    style="padding:10px 12px; cursor:pointer; border-bottom:1px solid #f1f5f9; font-size:0.85rem;"
                     data-value="${escapeHtml(v)}">
                     ${escapeHtml(v)}
                 </div>
@@ -835,250 +854,108 @@
 
             suggestionBox.style.display = "block";
 
-            suggestionBox.querySelectorAll(".autocomplete-item")
-                .forEach(item => {
-
-                    item.addEventListener("mouseenter", () => {
-                        item.style.background = "#eff6ff";
-                    });
-
-                    item.addEventListener("mouseleave", () => {
-                        item.style.background = "white";
-                    });
-
-                    item.addEventListener("click", () => {
-
-                        els.val.value = item.getAttribute("data-value");
-
-                        suggestionBox.style.display = "none";
-
-                        addFilter();
-                    });
-
+            suggestionBox.querySelectorAll(".autocomplete-item").forEach(item => {
+                item.addEventListener("mouseenter", () => { item.style.background = "#eff6ff"; });
+                item.addEventListener("mouseleave", () => { item.style.background = "white"; });
+                item.addEventListener("click", () => {
+                    els.val.value = item.getAttribute("data-value");
+                    suggestionBox.style.display = "none";
+                    addFilter();
                 });
+            });
         }
 
-        // =========================================================
-        // APLICAR FILTROS
-        // =========================================================
         function apply() {
-
             try {
-
-                if (active.length === 0) {
-
-                    table.clearFilter();
-
-                } else {
-
-                    // =========================================
-                    // AGRUPAR FILTROS POR COLUMNA
-                    // =========================================
-                    const grouped = {};
-
-                    active.forEach(f => {
-
-                        if (!grouped[f.field]) {
-                            grouped[f.field] = [];
-                        }
-
-                        grouped[f.field].push(f);
-
-                    });
-
-                    // =========================================
-                    // GENERAR FILTROS:
-                    // MISMA COLUMNA = OR
-                    // DIFERENTES COLUMNAS = AND
-                    // =========================================
-                    const finalFilters = [];
-
-                    Object.keys(grouped).forEach(field => {
-
-                        const arr = grouped[field];
-
-                        // Un solo filtro
-                        if (arr.length === 1) {
-
-                            finalFilters.push({
-                                field: field,
-                                type: "like",
-                                value: arr[0].value
-                            });
-
-                        }
-
-                        // Varios filtros misma columna = OR
-                        else {
-
-                            finalFilters.push(
-                                arr.map(f => ({
-                                    field: field,
-                                    type: "like",
-                                    value: f.value
-                                }))
-                            );
-
-                        }
-
-                    });
-
-                    table.setFilter(finalFilters);
-
+                // Sincronización: limpia la búsqueda global si se usan chips de filtrado
+                if (els.col.id === 'filterCol2' && $('globalSearchCons')) {
+                    $('globalSearchCons').value = '';
                 }
 
+                if (active.length === 0) {
+                    table.clearFilter();
+                } else {
+                    const grouped = {};
+                    active.forEach(f => {
+                        if (!grouped[f.field]) grouped[f.field] = [];
+                        grouped[f.field].push(f);
+                    });
+                    const finalFilters = [];
+                    Object.keys(grouped).forEach(field => {
+                        const arr = grouped[field];
+                        if (arr.length === 1) {
+                            finalFilters.push({ field: field, type: "like", value: arr[0].value });
+                        } else {
+                            finalFilters.push(arr.map(f => ({ field: field, type: "like", value: f.value })));
+                        }
+                    });
+                    table.setFilter(finalFilters);
+                }
             } catch (e) {
-
                 console.error("Filter apply error:", e);
-
             }
-
             renderChips();
         }
-        // =========================================================
-        // RENDER CHIPS
-        // =========================================================
+
         function renderChips() {
-
             if (active.length === 0) {
-
-                els.chips.innerHTML = `
-                    <span class="filter-empty">
-                        <i class="fas fa-info-circle"></i>
-                        Sin filtros activos
-                    </span>
-                `;
-
+                els.chips.innerHTML = `<span class="filter-empty"><i class="fas fa-info-circle"></i> Sin filtros activos</span>`;
                 els.clear.classList.add("hidden");
-
                 return;
             }
-
             els.chips.innerHTML = active.map((f, i) => `
                 <div class="filter-chip">
-                    <strong>${escapeHtml(f.title)}:</strong>
-                    ${escapeHtml(f.value)}
-
-                    <button class="filter-chip-x"
-                            data-idx="${i}">
-                        ×
-                    </button>
+                    <strong>${escapeHtml(f.title)}:</strong> ${escapeHtml(f.value)}
+                    <button class="filter-chip-x" data-idx="${i}">×</button>
                 </div>
             `).join("");
 
-            els.chips.querySelectorAll(".filter-chip-x")
-                .forEach(btn => {
-
-                    btn.addEventListener("click", () => {
-
-                        active.splice(
-                            parseInt(btn.getAttribute("data-idx")),
-                            1
-                        );
-
-                        apply();
-                    });
-
+            els.chips.querySelectorAll(".filter-chip-x").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    active.splice(parseInt(btn.getAttribute("data-idx")), 1);
+                    apply();
                 });
-
+            });
             els.clear.classList.remove("hidden");
         }
 
-        // =========================================================
-        // AGREGAR FILTRO
-        // =========================================================
         function addFilter() {
-
             const val = els.val.value.trim();
-
-            if (!val) {
-                els.val.focus();
-                return;
-            }
-
+            if (!val) { els.val.focus(); return; }
             const field = els.col.value;
+            const title = els.col.options[els.col.selectedIndex].text;
 
-            const title =
-                els.col.options[
-                    els.col.selectedIndex
-                ].text;
-
-            active.push({
-                field,
-                title,
-                value: val
-            });
-
+            active.push({ field, title, value: val });
             els.val.value = "";
-
             suggestionBox.style.display = "none";
-
             apply();
-
             els.val.focus();
         }
 
-        // =========================================================
-        // EVENTOS
-        // =========================================================
         els.add.addEventListener("click", addFilter);
-
-        els.val.addEventListener("keydown", e => {
-
-            if (e.key === "Enter") {
-
-                e.preventDefault();
-
-                addFilter();
-            }
-
-        });
-
-        els.val.addEventListener("input", () => {
-            renderSuggestions();
-        });
-
-        els.col.addEventListener("change", () => {
-
-            els.val.value = "";
-
-            renderSuggestions();
-
-        });
-
-        els.val.addEventListener("focus", () => {
-            renderSuggestions();
-        });
+        els.val.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); addFilter(); } });
+        els.val.addEventListener("input", renderSuggestions);
+        els.col.addEventListener("change", () => { els.val.value = ""; renderSuggestions(); });
+        els.val.addEventListener("focus", renderSuggestions);
 
         document.addEventListener("click", (e) => {
-
-            if (!autoWrap.contains(e.target)) {
-                suggestionBox.style.display = "none";
-            }
-
+            if (!autoWrap.contains(e.target)) suggestionBox.style.display = "none";
         });
 
-        els.clear.addEventListener("click", () => {
-
-            active = [];
-
-            apply();
-        });
-
+        els.clear.addEventListener("click", () => { active = []; apply(); });
         renderChips();
     }
+
     // =====================================================================
-    // Descubrimiento dinámico de campos en InvConsolidado
+    // Estructuración Dinámica de Columnas Consolidado (Descubrimiento)
     // =====================================================================
     function buildColumnsConsolidado(data) {
-
         if (!data || data.length === 0) {
             return { cols: [], invCodes: [], fields: {} };
         }
 
         const keySet = new Set();
         data.forEach(r => Object.keys(r).forEach(k => keySet.add(k)));
-
         const allKeys = [...keySet];
 
         const fields = {
@@ -1094,222 +971,265 @@
             importe:     findField(allKeys, ['Importe Inventario $'])
         };
 
+        // Descubrimiento por Regex de todos los códigos de centros presentes en el archivo
+        let invCodes = [];
+        allKeys.forEach(k => {
+            let mInv = k.match(/^Inv (\d+)$/);
+            if (mInv) invCodes.push(mInv[1]);
+            let mTra = k.match(/^Transito_INV_(\d+)$/);
+            if (mTra && !invCodes.includes(mTra[1])) invCodes.push(mTra[1]);
+        });
+        invCodes = [...new Set(invCodes)].sort();
+
+        // Mutar y mapear campos compuestos para optimizar búsquedas globales rápidas
+        data.forEach(row => {
+            let mat = row[fields.material] || '';
+            let txt = row[fields.texto] || '';
+            row['_material_desc'] = (mat + ' · ' + txt).trim();
+            row['_raw_material'] = mat;
+        });
+
         const cols = [
-
-            { title: 'Sector', field: fields.sector, minWidth: 140 },
-
-            { title: 'Grupo', field: fields.grupo, minWidth: 170 },
-
+            { title: 'Material + Descripción', field: '_material_desc', minWidth: 320, tooltip: true },
+            { title: 'Sector', field: fields.sector, minWidth: 140, visible: false },
+            { title: 'Grupo', field: fields.grupo, minWidth: 170, visible: false },
             { title: 'Condicion', field: fields.condicion, minWidth: 120 },
-
-            { title: 'Material', field: fields.material, minWidth: 120 },
-
-            { title: 'Texto breve de material', field: fields.texto, minWidth: 280 },
-
-            // PRECIO OFERTA SIEMPRE DESPUÉS DEL TEXTO
-            {
-                title: 'Precio Oferta',
-                field: fields.precio,
-                minWidth: 130,
-                hozAlign: 'right'
+            { 
+                title: 'Precio Oferta', 
+                field: fields.precio, 
+                minWidth: 130, 
+                hozAlign: 'right',
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '' : fmtMXN.format(v); }
             },
-
-            { title: 'Disponible 1031-1030', field: fields.disp1030, minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Disponible 1031-1032', field: fields.disp1032, minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1001', field: 'Inv 1001', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1001', field: 'Transito_INV_1001', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1003', field: 'Inv 1003', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1003', field: 'Transito_INV_1003', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1004', field: 'Inv 1004', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1004', field: 'Transito_INV_1004', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1017', field: 'Inv 1017', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1017', field: 'Transito_INV_1017', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1018', field: 'Inv 1018', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1018', field: 'Transito_INV_1018', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1022', field: 'Inv 1022', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1022', field: 'Transito_INV_1022', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv 1036', field: 'Inv 1036', minWidth: 110, hozAlign: 'right' },
-            { title: 'Transito_INV_1036', field: 'Transito_INV_1036', minWidth: 150, hozAlign: 'right' },
-
-            { title: 'Inv Suma', field: fields.invSuma, minWidth: 120, hozAlign: 'right' },
-
-            { title: 'Importe Inventario $', field: fields.importe, minWidth: 170, hozAlign: 'right' }
-
+            { 
+                title: 'Disponible C.1031 · Alm.1030', 
+                field: fields.disp1030, 
+                minWidth: 150, 
+                hozAlign: 'right',
+                formatter: (cell) => {
+                    let v = toNum(cell.getValue());
+                    return `<span class="clickable-cell">${isNaN(v) ? '0' : v.toLocaleString('es-MX')}</span>`;
+                },
+                cellClick: (e, cell) => {
+                    let material = cell.getRow().getData()._raw_material;
+                    if (material) showLotesModal(material, '1031', '1030');
+                }
+            },
+            { 
+                title: 'Disponible C.1031 · Alm.1032', 
+                field: fields.disp1032, 
+                minWidth: 150, 
+                hozAlign: 'right',
+                formatter: (cell) => {
+                    let v = toNum(cell.getValue());
+                    return `<span class="clickable-cell">${isNaN(v) ? '0' : v.toLocaleString('es-MX')}</span>`;
+                },
+                cellClick: (e, cell) => {
+                    let material = cell.getRow().getData()._raw_material;
+                    if (material) showLotesModal(material, '1031', '1032');
+                }
+            }
         ];
 
-        return {
-            cols,
-            invCodes: ['1001', '1003', '1004', '1017', '1018', '1022', '1036'],
-            fields
-        };
+        // Añadir pares de columnas de Inventario / Tránsito por centro descubierto de forma iterativa
+        invCodes.forEach(code => {
+            cols.push({
+                title: `Inv ${code}`,
+                field: `Inv ${code}`,
+                minWidth: 110,
+                hozAlign: 'right',
+                formatter: (cell) => {
+                    let v = toNum(cell.getValue());
+                    return `<span class="clickable-cell">${isNaN(v) ? '0' : v.toLocaleString('es-MX')}</span>`;
+                },
+                cellClick: (e, cell) => {
+                    let material = cell.getRow().getData()._raw_material;
+                    if (material) showLotesModal(material, code);
+                }
+            });
+            cols.push({
+                title: `Transito_INV_${code}`,
+                field: `Transito_INV_${code}`,
+                minWidth: 150,
+                hozAlign: 'right',
+                formatter: (cell) => {
+                    let v = toNum(cell.getValue());
+                    return `<span class="clickable-cell">${isNaN(v) ? '0' : v.toLocaleString('es-MX')}</span>`;
+                },
+                cellClick: (e, cell) => {
+                    let material = cell.getRow().getData()._raw_material;
+                    if (material) showLotesModal(material, code);
+                }
+            });
+        });
+
+        cols.push(
+            { 
+                title: 'Inv Suma', 
+                field: fields.invSuma, 
+                minWidth: 120, 
+                hozAlign: 'right',
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '' : v.toLocaleString('es-MX'); }
+            },
+            { 
+                title: 'Importe Inventario $', 
+                field: fields.importe, 
+                minWidth: 170, 
+                hozAlign: 'right',
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '' : fmtMXN.format(v); }
+            }
+        );
+
+        return { cols, invCodes, fields };
     }
 
-    function buildColumnsDetalle(data) {
-
+    function buildColumnsDetalle() {
         return [
-
-            {
-                title: 'Material',
-                field: 'Material',
-                minWidth: 120
+            { title: 'Material', field: 'Material', minWidth: 120 },
+            { title: 'Texto breve de material', field: 'Texto breve de material', minWidth: 280 },
+            { title: 'Centro', field: 'Centro', minWidth: 100 },
+            { title: 'Almacén', field: 'Almacén', minWidth: 100 },
+            { title: 'Lote', field: 'Lote', minWidth: 140 },
+            { title: 'FechaCaducidad', field: 'FechaCaducidad', minWidth: 140 },
+            { 
+                title: 'CantidadDisp', 
+                field: 'CantidadDisp', 
+                minWidth: 120, 
+                hozAlign: 'right',
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '0' : v.toLocaleString('es-MX'); }
             },
-
-            {
-                title: 'Texto breve de material',
-                field: 'Texto breve de material',
-                minWidth: 280
-            },
-
-            {
-                title: 'Centro',
-                field: 'Centro',
-                minWidth: 100
-            },
-
-            {
-                title: 'Almacén',
-                field: 'Almacén',
-                minWidth: 100
-            },
-
-            {
-                title: 'Lote',
-                field: 'Lote',
-                minWidth: 140
-            },
-
-            {
-                title: 'FechaCaducidad',
-                field: 'FechaCaducidad',
-                minWidth: 140
-            },
-
-            {
-                title: 'CantidadDisp',
-                field: 'CantidadDisp',
-                minWidth: 120,
-                hozAlign: 'right'
-            },
-
-            {
-                title: 'Precio oferta',
-                field: 'Precio oferta',
-                minWidth: 130,
-                hozAlign: 'right'
+            { 
+                title: 'Precio oferta', 
+                field: 'Precio oferta', 
+                minWidth: 130, 
+                hozAlign: 'right',
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '' : fmtMXN.format(v); }
             }
-
         ];
     }
 
     // =====================================================================
-    // Render chips dinámicos de inventario
+    // Selectores de Columnas de Inventario (Chips de Control Superior)
     // =====================================================================
     function renderInvSelector(invCodes, t2, fieldByCode) {
-
         const container = $('invSelector');
-
-        const labelHtml = `
-            <span class="inv-selector-label">
-                <i class="fas fa-sliders"></i>
-                Mostrar inventarios:
-            </span>
-        `;
-
-        const chipsHtml = invCodes.map(code => `
-            <button class="inv-chip active" data-inv="${escapeHtml(code)}">
-                ${escapeHtml(code)}
-            </button>
-        `).join('');
-
-        const clearHtml = `
-            <button class="inv-chip inv-chip-clear" id="invChipClear">
-                <i class="fas fa-eye-slash"></i>
-                Ocultar todos
-            </button>
-        `;
+        const labelHtml = `<span class="inv-selector-label"><i class="fas fa-sliders"></i> Mostrar inventarios:</span>`;
+        const chipsHtml = invCodes.map(code => `<button class="inv-chip active" data-inv="${escapeHtml(code)}">${escapeHtml(code)}</button>`).join('');
+        const clearHtml = `<button class="inv-chip inv-chip-clear" id="invChipClear"><i class="fas fa-eye-slash"></i> Ocultar todos</button>`;
 
         container.innerHTML = labelHtml + chipsHtml + clearHtml;
 
-        // ===== Mostrar inicialmente TODOS =====
         invCodes.forEach(code => {
-
             const invField = fieldByCode.inv[code];
             const traField = fieldByCode.tra[code];
-
             const colInv = invField ? t2.getColumn(invField) : null;
             const colTra = traField ? t2.getColumn(traField) : null;
-
             if (colInv) colInv.show();
             if (colTra) colTra.show();
         });
 
-        // ===== Click individual =====
         container.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
-
             chip.addEventListener('click', () => {
-
                 const code = chip.getAttribute('data-inv');
-
                 const invField = fieldByCode.inv[code];
                 const traField = fieldByCode.tra[code];
-
                 const colInv = invField ? t2.getColumn(invField) : null;
                 const colTra = traField ? t2.getColumn(traField) : null;
-
                 const willBeActive = !chip.classList.contains('active');
 
                 chip.classList.toggle('active');
-
                 if (willBeActive) {
-
                     if (colInv) colInv.show();
                     if (colTra) colTra.show();
-
                 } else {
-
                     if (colInv) colInv.hide();
                     if (colTra) colTra.hide();
                 }
             });
         });
 
-        // ===== Botón ocultar todos =====
         $('invChipClear').addEventListener('click', () => {
-
             container.querySelectorAll('.inv-chip[data-inv]').forEach(chip => {
-
                 chip.classList.remove('active');
-
                 const code = chip.getAttribute('data-inv');
-
                 const invField = fieldByCode.inv[code];
                 const traField = fieldByCode.tra[code];
-
                 const colInv = invField ? t2.getColumn(invField) : null;
                 const colTra = traField ? t2.getColumn(traField) : null;
-
                 if (colInv) colInv.hide();
                 if (colTra) colTra.hide();
             });
         });
     }
+
     // =====================================================================
-    // Top 5 inventarios por Importe Inventario $
+    // Mostrar Modal de Desglose de Lotes
+    // =====================================================================
+    function showLotesModal(material, centro = null, almacen = null) {
+        if (!rawDetalleData || !rawDetalleData.length) { 
+            alert("Los datos detallados de lotes se están sincronizando. Intente de nuevo."); 
+            return; 
+        }
+        const filtered = rawDetalleData.filter(row => {
+            const mat = row.Material || '';
+            if (mat !== material) return false;
+            if (centro && String(row.Centro || '').trim() !== String(centro).trim()) return false;
+            if (almacen && String(row.Almacén || '').trim() !== String(almacen).trim()) return false;
+            return true;
+        });
+        if (!filtered.length) { 
+            const ubic = centro ? ` en el centro ${centro}${almacen ? ` / almacén ${almacen}` : ''}` : '';
+            alert(`No existen lotes registrados para el material "${material}"${ubic}.`); 
+            return; 
+        }
+        
+        let title = `Lotes · ${material} (Todos los centros)`;
+        if (centro && almacen) title = `Lotes · ${material} (Centro ${centro} · Almacén ${almacen})`;
+        else if (centro) title = `Lotes · ${material} (Centro ${centro})`;
+        $('modalTitle').innerText = title;
+        
+        if (window.modalTabulator) {
+            window.modalTabulator.destroy();
+        }
+        
+        const modalCols = [
+            { title: 'Centro', field: 'Centro', minWidth: 80 },
+            { title: 'Almacén', field: 'Almacén', minWidth: 90 },
+            { title: 'Lote', field: 'Lote', minWidth: 130 },
+            { title: 'Caducidad', field: 'FechaCaducidad', minWidth: 120 },
+            { 
+                title: 'Cantidad', 
+                field: 'CantidadDisp', 
+                hozAlign: 'right', 
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '0' : v.toLocaleString('es-MX'); } 
+            },
+            { 
+                title: 'Precio Oferta', 
+                field: 'Precio oferta', 
+                hozAlign: 'right', 
+                formatter: (c) => { let v = toNum(c.getValue()); return isNaN(v) ? '' : fmtMXN.format(v); } 
+            }
+        ];
+        
+        window.modalTabulator = new Tabulator("#modalTabla", { 
+            data: filtered, 
+            layout: "fitColumns", 
+            columns: modalCols, 
+            pagination: "local", 
+            paginationSize: 10 
+        });
+        
+        $('loteModal').style.display = "flex";
+    }
+
+    // =====================================================================
+    // Generar Widget de Clasificación del Ranking Top 5
     // =====================================================================
     function renderTopInventarios(data, fields) {
         const titleEl    = $('topInvTitle');
         const subtitleEl = $('topInvSubtitle');
         const listEl     = $('topInvList');
 
-        // Elegir métrica: prefiere Importe Inventario $, fallback a Inv Suma
         let metricField = fields.importe;
         let metricLabel = 'Importe Inventario $';
         let isCurrency = true;
@@ -1320,16 +1240,16 @@
         }
         if (!metricField) {
             titleEl.textContent = 'Top 5 Inventarios';
-            subtitleEl.textContent = 'No se encontró ninguna métrica válida en los datos';
-            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Esperando columnas "Importe Inventario $" o "Inv Suma"</div>';
+            subtitleEl.textContent = 'Métrica de cálculo ausente en la fuente de datos';
+            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Esperando columnas compatibles de Importe o Sumatoria</div>';
             return;
         }
 
         titleEl.textContent = `Top 5 Inventarios (por ${metricLabel})`;
-        subtitleEl.textContent = `Ranking dinámico calculado sobre ${data.length.toLocaleString('es-MX')} registros`;
+        subtitleEl.textContent = `Ranking dinámico de un universo de ${data.length.toLocaleString('es-MX')} registros`;
 
         const matField  = fields.material  || 'Material';
-        const descField = fields.textoBreve || 'Texto breve de material';
+        const descField = fields.texto || 'Texto breve de material';
 
         const ranked = data
             .map(r => ({ row: r, val: toNum(r[metricField]) }))
@@ -1338,7 +1258,7 @@
             .slice(0, TOP_INV_N);
 
         if (ranked.length === 0) {
-            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Sin datos numéricos suficientes para el ranking</div>';
+            listEl.innerHTML = '<div style="color:#94a3b8; padding:12px;">Data insuficiente para estructurar el ranking</div>';
             return;
         }
 
@@ -1363,7 +1283,7 @@
     }
 
     // =====================================================================
-    // Inicialización principal
+    // Inicialización de Flujos e Inyección de Datos
     // =====================================================================
     function initApp() {
         const url1 = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent("InvDetalle")}`;
@@ -1378,13 +1298,13 @@
                 `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} hrs`;
         }
 
-        // ====== TABLA 1: InvDetalle ======
+        // ====== PROCESAR TABLA 1: InvDetalle ======
         fetch(url1)
             .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
             .then(rawData => {
                 try {
                     const data = normalizeData(rawData);
-                    console.log(`[InvDetalle] ${data.length} registros · llaves:`, data[0] ? Object.keys(data[0]) : []);
+                    rawDetalleData = data;
 
                     $("totalRegistros").textContent = data.length.toLocaleString('es-MX');
                     const matsUnicos = new Set(data.map(x => x.Material).filter(m => m && String(m).trim() !== ""));
@@ -1398,19 +1318,18 @@
                     $("totalUnidades").textContent = totalUnidades.toLocaleString('es-MX', { maximumFractionDigits: 0 });
                     updateTimestamp();
 
-                    const cols1 = buildColumnsDetalle(data);
+                    const cols1 = buildColumnsDetalle();
 
                     t1 = new Tabulator("#tabla1", {
                         data,
                         layout: "fitDataStretch",
+                        maxHeight: "65vh",
+                        rowHeight: 38,
                         pagination: "local",
                         paginationSize: 15,
                         paginationSizeSelector: [15, 30, 50, 100],
                         placeholder: "No se encontraron registros de lotes disponibles",
-                        downloadConfig:{
-                            columnGroups:false,
-                            rowGroups:false,
-                        },
+                        downloadConfig:{ columnGroups:false, rowGroups:false },
                         columns: cols1
                     });
 
@@ -1428,22 +1347,16 @@
                 $("tabla1").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvDetalle: ${escapeHtml(err.message)}</div>`;
             });
 
-        // ====== TABLA 2: InvConsolidado ======
+        // ====== PROCESAR TABLA 2: InvConsolidado ======
         fetch(url2)
             .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
             .then(rawData => {
                 try {
                     const data = normalizeData(rawData);
-                    console.log(`[InvConsolidado] ${data.length} registros · llaves:`, data[0] ? Object.keys(data[0]) : []);
-
                     const { cols: cols2, invCodes, fields } = buildColumnsConsolidado(data);
-                    console.log('[InvConsolidado] Centros detectados:', invCodes);
-                    console.log('[InvConsolidado] Campos clave:', fields);
 
-                    // Ranking
                     renderTopInventarios(data, fields);
 
-                    // Threshold de Precio para resaltado
                     if (fields.precio) {
                         const precios = data
                             .map(r => toNum(r[fields.precio]))
@@ -1452,27 +1365,19 @@
                         if (precios.length > 0) {
                             const idx = Math.min(TOP_PRECIO_N - 1, precios.length - 1);
                             topPrecioThreshold = precios[idx];
-                            console.log(`[InvConsolidado] Threshold de Precio (top ${TOP_PRECIO_N}):`, topPrecioThreshold);
                         }
                     }
 
                     t2 = new Tabulator("#tabla2", {
-
                         data,
                         layout: "fitDataStretch",
-
+                        maxHeight: "65vh",
+                        rowHeight: 38,
                         pagination: "local",
                         paginationSize: 15,
-
                         paginationSizeSelector: [15, 30, 50, 100],
-
                         placeholder: "No hay registros consolidados",
-
-                        downloadConfig:{
-                            columnGroups:false,
-                            rowGroups:false,
-                        },
-
+                        downloadConfig:{ columnGroups:false, rowGroups:false },
                         columns: cols2,
                         rowFormatter: function(row) {
                             const d = row.getData();
@@ -1491,121 +1396,60 @@
                         chips: $("filterChips2"), clear: $("filterClear2")
                     });
 
-                    // Construir mapas code→field para los chips
-                    const fieldByCode = {
-                        inv: {},
-                        tra: {}
-                    };
-
+                    const fieldByCode = { inv: {}, tra: {} };
                     invCodes.forEach(code => {
-
-                        const colInv = cols2.find(c =>
-                            c.field === `Inv ${code}`
-                        );
-
-                        const colTra = cols2.find(c =>
-                            c.field === `Transito_INV_${code}`
-                        );
-
-                        if (colInv) {
-                            fieldByCode.inv[code] = colInv.field;
-                        }
-
-                        if (colTra) {
-                            fieldByCode.tra[code] = colTra.field;
-                        }
+                        const colInv = cols2.find(c => c.field === `Inv ${code}`);
+                        const colTra = cols2.find(c => c.field === `Transito_INV_${code}`);
+                        if (colInv) fieldByCode.inv[code] = colInv.field;
+                        if (colTra) fieldByCode.tra[code] = colTra.field;
                     });
-
-                    console.log("fieldByCode", fieldByCode);
 
                     renderInvSelector(invCodes, t2, fieldByCode);
-                    // =====================================================
-                    // EXPORTACIONES
-                    // =====================================================
 
-                    // ===== TABLA 1 =====
-
-                    $('exportExcel1').addEventListener('click', () => {
-
-                        if (!t1) return;
-
-                        t1.download(
-                            "xlsx",
-                            "Inventario_Lotes.xlsx",
-                            {
-                                sheetName: "Inventario"
-                            }
-                        );
+                    // Motor de Búsqueda Global sobre la columna unificada Material + Descripción
+                    const globalSearch = $('globalSearchCons');
+                    globalSearch.addEventListener('input', (e) => {
+                        const term = e.target.value.trim();
+                        if (term === "") {
+                            t2.clearFilter();
+                        } else {
+                            t2.setFilter("_material_desc", "like", term);
+                        }
                     });
 
-                    $('exportCSV1').addEventListener('click', () => {
-
-                        if (!t1) return;
-
-                        t1.download(
-                            "csv",
-                            "Inventario_Lotes.csv"
-                        );
+                    // Mecanismo Toggle para Ocultar/Mostrar Grupo y Sector
+                    let extraVisible = false;
+                    $('toggleExtraCols').addEventListener('click', () => {
+                        extraVisible = !extraVisible;
+                        const grupoCol = t2.getColumn(fields.grupo);
+                        const sectorCol = t2.getColumn(fields.sector);
+                        if (grupoCol) grupoCol.toggle();
+                        if (sectorCol) sectorCol.toggle();
+                        $('toggleExtraCols').innerHTML = extraVisible 
+                            ? '<i class="fas fa-eye"></i> Ocultar Grupo/Sector' 
+                            : '<i class="fas fa-eye-slash"></i> Mostrar Grupo/Sector';
                     });
 
-                    // ===== TABLA 2 =====
-
-                    $('exportExcel2').addEventListener('click', () => {
-
-                        if (!t2) return;
-
-                        t2.download(
-                            "xlsx",
-                            "Resumen_Inventario.xlsx",
-                            {
-                                sheetName: "Resumen"
-                            }
-                        );
-                    });
-
-                    $('exportCSV2').addEventListener('click', () => {
-
-                        if (!t2) return;
-
-                        t2.download(
-                            "csv",
-                            "Resumen_Inventario.csv"
-                        );
-                    });
-
-                    // =====================================================
-                    // ZOOM TABLA 1
-                    // =====================================================
+                    // Controles de Exportaciones y Zoom Computados
+                    $('exportExcel1').addEventListener('click', () => { if (t1) t1.download("xlsx", "Inventario_Lotes.xlsx", { sheetName: "Lotes" }); });
+                    $('exportCSV1').addEventListener('click', () => { if (t1) t1.download("csv", "Inventario_Lotes.csv"); });
+                    $('exportExcel2').addEventListener('click', () => { if (t2) t2.download("xlsx", "Resumen_Inventario.xlsx", { sheetName: "Resumen" }); });
+                    $('exportCSV2').addEventListener('click', () => { if (t2) t2.download("csv", "Resumen_Inventario.csv"); });
 
                     $('zoom1').addEventListener('input', function () {
-
                         const zoom = this.value;
-
                         $('zoomWrap1').style.zoom = `${zoom}%`;
-
                         $('zoomValue1').textContent = `${zoom}%`;
-
-                        if (t1) {
-                            t1.redraw(true);
-                        }
+                        if (t1) t1.redraw(true);
                     });
-
-                    // =====================================================
-                    // ZOOM TABLA 2
-                    // =====================================================
 
                     $('zoom2').addEventListener('input', function () {
-
                         const zoom = this.value;
-
                         $('zoomWrap2').style.zoom = `${zoom}%`;
-
                         $('zoomValue2').textContent = `${zoom}%`;
-
-                        if (t2) {
-                            t2.redraw(true);
-                        }
+                        if (t2) t2.redraw(true);
                     });
+
                 } catch (e) {
                     console.error('Error procesando InvConsolidado:', e);
                     $("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error procesando datos: ${escapeHtml(e.message)}</div>`;
@@ -1616,7 +1460,7 @@
                 $("tabla2").innerHTML = `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error al conectar con InvConsolidado: ${escapeHtml(err.message)}</div>`;
             });
 
-        // ====== Tabs ======
+        // ====== Control de Pestañas ======
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1629,16 +1473,22 @@
             });
         });
 
-        setInterval(() => window.location.reload(), 900000);
+        // Controladores de cierre del Modal
+        const modal = $('loteModal');
+        modal.querySelector('.close-modal').onclick = () => { modal.style.display = 'none'; };
+        window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+        setInterval(() => window.location.reload(), 900000); // Autorrecarga cada 15 min
         $("lastUpdateBadge").onclick = () => window.location.reload();
     }
 
+    // Ejecución controlada tras asegurar la carga de librerías en DOM
     waitForTabulator(() => {
         try { initApp(); }
         catch (e) {
-            console.error('Error fatal:', e);
+            console.error('Error fatal en el flujo:', e);
             document.body.insertAdjacentHTML('beforeend',
-                `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error fatal: ${escapeHtml(e.message)}</div>`);
+                `<div class="error-message"><i class="fas fa-triangle-exclamation"></i> Error crítico del aplicativo: ${escapeHtml(e.message)}</div>`);
         }
     });
 })();
