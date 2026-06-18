@@ -742,8 +742,8 @@
     // Inicialización de Flujos e Inyección de Datos
     // =====================================================================
     function initApp() {
-        const url1 = `https://opensheet.elk.sh/${CONFIG.sheetId}/${encodeURIComponent(CONFIG.tabs.detalle)}`;
-        const url2 = `https://opensheet.elk.sh/${CONFIG.sheetId}/${encodeURIComponent(CONFIG.tabs.consolidado)}`;
+        const url1 = `${CONFIG.apiUrl}?tab=${encodeURIComponent(CONFIG.tabs.detalle)}`;
+        const url2 = `${CONFIG.apiUrl}?tab=${encodeURIComponent(CONFIG.tabs.consolidado)}`;
 
         let t1 = null, t2 = null;
         let topPrecioThreshold = Infinity;

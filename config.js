@@ -5,6 +5,7 @@
 const CONFIG = {
     // Hoja de Google Sheets publicada vía opensheet
     sheetId: "15IEM6iP2NiGObcnpYKznPtbsOv6LS78ER_xP7DxdHT4",
+    apiUrl: "https://script.google.com/macros/s/AKfycbz74169NY7gqzyW-y7K_WUQJuqMWNuZjmBS-TKfJMBa_f_nweEmDF47NuTcLlBkuAyKAg/exec",
     tabs: {
         detalle:     "InvDetalle",      // pestaña de lotes
         consolidado: "InvConsolidado"   // pestaña de resumen
